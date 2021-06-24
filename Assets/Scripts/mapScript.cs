@@ -3,19 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class mapScript : MonoBehaviour
+public class MapScript : MonoBehaviour
 {
     public int width, height;
     public Tilemap tilemap;
-    public MapCellType[,] mapCellTypes = new MapCellType[50,50];
-    public GameObject[,] gameObjects;
+    public MapCellType[,] mapCellTypes = new MapCellType[50, 50];
+    public GameObject[,] gameObjects = null;
+    public Vector3Int birthPoint;
+    public Vector3Int[] doorPoints;
+    public RoomType roomType;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        initMapCells();
+        initGameObject();
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public GameObject getCellGameObject(Vector3Int position)
+    {
+        return gameObjects[position.x, position.y];
+    }
+
+    public Vector3Int getCellPosition(Vector3 worldPosition)
+    {
+        return tilemap.WorldToCell(worldPosition);
+    }
+
+    public Vector3 getCellCenter(Vector3Int position)
+    {
+        return tilemap.GetCellCenterWorld(position);
+    }
+
+    public void initGameObject()
+    {
+    }
 
     public MapCellType getMapType(Vector3Int v)
     {
         return mapCellTypes[v.x, v.y];
     }
 
-    public void initmap()
+    public void initMapCells()
     {
         for (int i = 1; i <= width; i++)
         {
@@ -43,16 +79,5 @@ public class mapScript : MonoBehaviour
                 Debug.Log(mapTypes[i, j]);
             }
         }*/
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        initmap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
