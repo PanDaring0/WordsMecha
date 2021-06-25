@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelInitScript : MonoBehaviour
 {
-    public SceneMap sceneMap;
     public int sceneLevel;
     public int sceneNumInLevel;
     // Start is called before the first frame update

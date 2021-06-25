@@ -11,11 +11,22 @@ public class SceneMap
     public static int[,] sceneId = new int[30, 30];
     public static SortedList sortedList = new SortedList();
     public static Vector2Int[] scenePoint = new Vector2Int[15];
+    public static Vector2Int 
+    east = new Vector2Int(1,0), 
+    west = new Vector2Int(-1,0), 
+    north = new Vector2Int(0,1), 
+    south = new Vector2Int(0,-1);
+    public static HashSet<Vector2Int> directionGroup = new HashSet<Vector2Int>();
 
     public static void setSceneMap(int L,int N)
     {
         sceneLevel = L;
         sceneNumInLevel = N;
+        directionGroup.Clear();
+        directionGroup.Add(east);
+        directionGroup.Add(west);
+        directionGroup.Add(north);
+        directionGroup.Add(south);
     }
 
     public static void creatSceneMap()
@@ -29,7 +40,13 @@ public class SceneMap
             scenePoint[i] = new Vector2Int(v.x, v.y);
             for(int j = 1; j <= i; j++)
             {
-                //for(int )
+                foreach(Vector2Int k in directionGroup)
+                {
+                    if(sceneId[v.x,v.y] == 0)
+                    {
+                        sortedList.Add(Random.Range(0,1000),new Vector2Int(v.x, v.y));
+                    }
+                }
             }
         }
     }
