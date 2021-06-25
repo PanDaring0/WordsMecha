@@ -10,7 +10,7 @@ public class LevelInitScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sceneMap = new SceneMap(sceneLevel,sceneNumInLevel);
+        SceneMap.setSceneMap(sceneLevel,sceneNumInLevel);
     }
 
     // Update is called once per frame
