@@ -8,7 +8,7 @@ public class MapScript : MonoBehaviour
     public int width, height;
     public Tilemap tilemap;
     public MapCellType[,] mapCellTypes = new MapCellType[50, 50];
-    public GameObject[,] gameObjects = null;
+    public GameObject[,] gameObjectGroup = null;
     public Vector3Int birthPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
@@ -27,9 +27,25 @@ public class MapScript : MonoBehaviour
 
     }
 
+    public void setCellGameObject(Vector3Int position,GameObject gameObject)
+    {
+        gameObjectGroup[position.x, position.y] = gameObject;
+        gameObject.transform.position = position;
+    }
+
+    public ArrayList getGameObjectList(ArrayList positionList)
+    {
+        ArrayList gameObjectList = new ArrayList();
+        foreach (Vector3Int k in positionList)
+        {
+            gameObjectList.Add(getCellGameObject(k));
+        }
+        return gameObjectList;
+    }
+
     public GameObject getCellGameObject(Vector3Int position)
     {
-        return gameObjects[position.x, position.y];
+        return gameObjectGroup[position.x, position.y];
     }
 
     public Vector3Int getCellPosition(Vector3 worldPosition)
