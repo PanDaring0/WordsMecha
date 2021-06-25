@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneMap
+public static class SceneMap
 {
-    public static Scene[] Scenes;
-    public static int sceneLevel;
     public static int sceneNumInLevel;
     public static int[,] sceneId = new int[30, 30];
     public static SortedList sortedList = new SortedList();
@@ -17,10 +15,10 @@ public class SceneMap
     north = new Vector2Int(0,1), 
     south = new Vector2Int(0,-1);
     public static HashSet<Vector2Int> directionGroup = new HashSet<Vector2Int>();
+    public static bool[,] isGridInSet = new bool[30,30]; 
 
-    public static void setSceneMap(int L,int N)
+    public static void setSceneMap(int N)
     {
-        sceneLevel = L;
         sceneNumInLevel = N;
         directionGroup.Clear();
         directionGroup.Add(east);
@@ -32,8 +30,10 @@ public class SceneMap
     public static void creatSceneMap()
     {
         System.Array.Clear(sceneId, 0, sceneId.Length);
+        System.Array.Clear(isGridInSet, 0, sceneId.Length);
         sortedList.Add(Random.Range(0, 1000),new Vector2Int(15,15));
-        for(int i = 1; i <= 12; i++)
+        isGridInSet[15, 15] = true;
+        for(int i = 1; i <= sceneNumInLevel; i++)
         {
             Vector2Int v = (Vector2Int)sortedList.GetByIndex(0);
             sceneId[v.x, v.y] = i;
@@ -42,9 +42,10 @@ public class SceneMap
             {
                 foreach(Vector2Int k in directionGroup)
                 {
-                    if(sceneId[v.x,v.y] == 0)
+                    if(isGridInSet[v.x,v.y] == false)
                     {
                         sortedList.Add(Random.Range(0,1000),new Vector2Int(v.x, v.y));
+                        isGridInSet[v.x, v.y] = true;
                     }
                 }
             }
