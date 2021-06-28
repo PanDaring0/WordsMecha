@@ -31,6 +31,7 @@ public static class SceneMap
     {
         System.Array.Clear(sceneId, 0, sceneId.Length);
         System.Array.Clear(isGridInSet, 0, sceneId.Length);
+        System.Array.Clear(scenePoint, 0, scenePoint.Length);
         sortedList.Add(Random.Range(0, 1000),new Vector2Int(15,15));
         isGridInSet[15, 15] = true;
         for(int i = 1; i <= sceneNumInLevel; i++)
@@ -38,18 +39,29 @@ public static class SceneMap
             Vector2Int v = (Vector2Int)sortedList.GetByIndex(0);
             sceneId[v.x, v.y] = i;
             scenePoint[i] = new Vector2Int(v.x, v.y);
-            for(int j = 1; j <= i; j++)
+            sortedList.RemoveAt(0);
+            foreach(Vector2Int k in directionGroup)
             {
-                foreach(Vector2Int k in directionGroup)
+                if(isGridInSet[v.x + k.x,v.y+k.y] == false)
                 {
-                    if(isGridInSet[v.x,v.y] == false)
-                    {
-                        sortedList.Add(Random.Range(0,1000),new Vector2Int(v.x, v.y));
-                        isGridInSet[v.x, v.y] = true;
-                    }
+                    sortedList.Add(Random.Range(0,1000),new Vector2Int(v.x + k.x, v.y + k.y));
+                    isGridInSet[v.x + k.x, v.y + k.y] = true;
                 }
             }
         }
     }
 
 }
+
+/*public static class SceneMap
+{
+    public static int sceneNumInLevel;
+    public static void setSceneMap(int N)
+    {
+        sceneNumInLevel = N;
+    }
+    public static void creatSceneMap()
+    {
+
+    }
+}*/

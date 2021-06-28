@@ -15,6 +15,16 @@ public class DebugScript : MonoBehaviour
         //tilemap.SetTile(new Vector3Int(0, 0, 0), tile);
         //Debug.Log(tilemap.GetTile(new Vector3Int(0, 0, 0)));
         //Debug.Log(tilemap.tileAnchor);
+        /*SceneMap.setSceneMap(12);
+        SceneMap.creatSceneMap();
+        foreach(int k in SceneMap.sceneId)
+        {
+            if(k != 0)
+            {
+                Debug.Log(k);
+                Debug.Log(SceneMap.scenePoint[k]);
+            }
+        }*/
     }
 
     // Update is called once per frame
