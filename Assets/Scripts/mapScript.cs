@@ -18,13 +18,13 @@ public class MapScript : MonoBehaviour
     {
         initMapCells();
         initGameObject();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void setCellGameObject(Vector3Int position,GameObject gameObject)
@@ -33,9 +33,9 @@ public class MapScript : MonoBehaviour
         gameObject.transform.position = position;
     }
 
-    public ArrayList getGameObjectList(ArrayList positionList)
+    public List<GameObject> getGameObjectList(List<Vector3Int> positionList)
     {
-        ArrayList gameObjectList = new ArrayList();
+        List<GameObject> gameObjectList = new List<GameObject>();
         foreach (Vector3Int k in positionList)
         {
             gameObjectList.Add(getCellGameObject(k));
@@ -50,7 +50,12 @@ public class MapScript : MonoBehaviour
 
     public Vector3Int getCellPosition(Vector3 worldPosition)
     {
-        return tilemap.WorldToCell(worldPosition);
+        Vector3Int position = tilemap.WorldToCell(worldPosition);
+        if (position.x > width || position.x < 1 || position.y > height || position.y < 1)
+        {
+            return new Vector3Int(-1, -1, -1);
+        }
+        return position;
     }
 
     public Vector3 getCellCenter(Vector3Int position)
