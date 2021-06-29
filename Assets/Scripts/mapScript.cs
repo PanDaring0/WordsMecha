@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class MapScript : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class MapScript : MonoBehaviour
         
     }
 
+    public static int disBetweenPosition(Vector3Int A,Vector3Int B)
+    {
+        return Math.Abs(A.x - B.x) + Math.Abs(A.y - B.y);
+    }
+
     public void setCellGameObject(Vector3Int position,GameObject gameObject)
     {
         gameObjectGroup[position.x, position.y] = gameObject;
@@ -45,13 +51,17 @@ public class MapScript : MonoBehaviour
 
     public GameObject getCellGameObject(Vector3Int position)
     {
+        if(isPositionInMap(position) == false)
+        {
+            return null;
+        }
         return gameObjectGroup[position.x, position.y];
     }
 
     public Vector3Int getCellPosition(Vector3 worldPosition)
     {
         Vector3Int position = tilemap.WorldToCell(worldPosition);
-        if (position.x > width || position.x < 1 || position.y > height || position.y < 1)
+        if (isPositionInMap(position) == false)
         {
             return new Vector3Int(-1, -1, -1);
         }
@@ -70,6 +80,13 @@ public class MapScript : MonoBehaviour
     public MapCellType getMapType(Vector3Int v)
     {
         return mapCellTypes[v.x, v.y];
+    }
+
+    public bool isPositionInMap(Vector3Int position)
+    {
+        if (position.x > width || position.x < 1 || position.y > height || position.y < 1)
+            return false;
+        else return true;
     }
 
     public void initMapCells()
