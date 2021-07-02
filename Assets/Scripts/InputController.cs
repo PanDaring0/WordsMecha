@@ -12,8 +12,15 @@ public class InputController : MonoBehaviour
     private MapScript mapScript;
     private Vector3 mousePositionOnScreen;
     private Vector3 mouseWorldPosition;
+    private float x;
+    private float y;
+    private static bool selectable;//是否可以选择方块，即系统是否位于UI层
     private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
     public int energyRemained = 0;//本回合剩余的能量
+    
+
+
+
 
     public void Start()
     {
@@ -27,6 +34,7 @@ public class InputController : MonoBehaviour
     {
         MouseFlow();
         MouseClick();
+        RayCheck();
     }
 
     //鼠标坐标获取
@@ -34,15 +42,17 @@ public class InputController : MonoBehaviour
     {
         mousePositionOnScreen = Input.mousePosition;
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePositionOnScreen);
+        x = mouseWorldPosition.x;
+        y = mouseWorldPosition.y;
     }
 
     public void MouseClick()
     {
+        if(!selectable)
+            return;
+
         if(Input.GetMouseButtonDown(0))
         {
-            float x = mouseWorldPosition.x;
-            float y = mouseWorldPosition.y;
-
             if(mode == 0)
                 Debug.Log("请选择技能");
             else if(mode == 1)
@@ -95,5 +105,32 @@ public class InputController : MonoBehaviour
     public bool GridConfirm()
     {
         return true;
+    }
+
+
+    private bool Filed()
+    {
+        return true;
+    }
+
+
+    public void RayCheck()
+    {
+        if(Input.GetMouseButton(0)){
+        //从摄像机发出到点击坐标的射线
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if(Physics.Raycast(ray,out hitInfo)){
+            //划出射线，只有在scene视图中才能看到
+            Debug.DrawLine(ray.origin,hitInfo.point);
+            GameObject gameObj = hitInfo.collider.gameObject;
+            Debug.Log("click object name is " + gameObj.name);
+            //当射线碰撞目标为boot类型的物品，执行拾取操作
+            if(string.Equals(gameObj.tag,"UI"))
+            {
+                Debug.Log("pickup!");
+            }
+        }
+    }
     }
 }
