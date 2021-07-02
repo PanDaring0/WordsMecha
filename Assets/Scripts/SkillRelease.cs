@@ -10,75 +10,50 @@ public class SkillRelease : MonoBehaviour
     {
         user = character;
     }
-
-    //判断技能剩余数量是否大于零
-    public bool Enough(Skill skill)
-    {
-        if(skill.skillRemained <= 0)
-        {
-            Debug.Log("技能数量不足！");
-            return false;
-        }
-        else
-            return true;
-    }
     
     //施放技能的最大范围
     public List<Vector3Int> ReleaseRange(Skill skill)
     {
         List<Vector3Int> rangelist = new List<Vector3Int>();
         int distance = skill.skillRange;
+        Vector3Int zeroposition = new Vector3Int(0,0,0);
+        Vector3Int target = new Vector3Int();
         for(int i = -distance;i<distance;i++)
         {
+            target.x = i;
             for(int j = -distance;j<distance;j++)
             {
+                target.y = j;
+                if(MapScript.disBetweenPosition(target,zeroposition)<=distance)
+                    rangelist.Add(target);
             }
         }
         return rangelist;
     }
 
-    //根据技能检测技能的伤害范围
+    //检测伤害范围
     public List<Vector3Int> CheckRange(Skill skill,Vector3Int centerpoint)
     {
         List<Vector3Int> vect3list = new List<Vector3Int>();
         switch(skill.skillDamageRange)
         {
-            case 1:vect3list.Add(new Vector3Int(1,0,0));
-                    vect3list.Add(new Vector3Int(-1,0,0));
-                    vect3list.Add(new Vector3Int(0,1,0));
-                    vect3list.Add(new Vector3Int(0,-1,0));
+            case 1:vect3list.Add(new Vector3Int(0,0,0));
                     break;
             case 2:vect3list.Add(new Vector3Int(1,0,0));
                     vect3list.Add(new Vector3Int(-1,0,0));
                     vect3list.Add(new Vector3Int(0,1,0));
                     vect3list.Add(new Vector3Int(0,-1,0));
-                    vect3list.Add(new Vector3Int(1,1,0));
-                    vect3list.Add(new Vector3Int(-1,1,0));
-                    vect3list.Add(new Vector3Int(1,-1,0));
-                    vect3list.Add(new Vector3Int(-1,-1,0));
+                    vect3list.Add(new Vector3Int(0,0,0));
                     break;
             case 3:vect3list.Add(new Vector3Int(1,0,0));
                     vect3list.Add(new Vector3Int(-1,0,0));
                     vect3list.Add(new Vector3Int(0,1,0));
                     vect3list.Add(new Vector3Int(0,-1,0));
-                    break;
-            case 4:vect3list.Add(new Vector3Int(1,0,0));
-                    vect3list.Add(new Vector3Int(-1,0,0));
-                    vect3list.Add(new Vector3Int(0,1,0));
-                    vect3list.Add(new Vector3Int(0,-1,0));
-                    vect3list.Add(new Vector3Int(1,1,0));
-                    vect3list.Add(new Vector3Int(-1,1,0));
                     vect3list.Add(new Vector3Int(1,-1,0));
                     vect3list.Add(new Vector3Int(-1,-1,0));
-                    break;
-            case 5:vect3list.Add(new Vector3Int(1,0,0));
-                    vect3list.Add(new Vector3Int(-1,0,0));
-                    vect3list.Add(new Vector3Int(0,1,0));
-                    vect3list.Add(new Vector3Int(0,-1,0));
-                    vect3list.Add(new Vector3Int(2,0,0));
-                    vect3list.Add(new Vector3Int(-2,0,0));
-                    vect3list.Add(new Vector3Int(0,2,0));
-                    vect3list.Add(new Vector3Int(0,-2,0));
+                    vect3list.Add(new Vector3Int(1,1,0));
+                    vect3list.Add(new Vector3Int(-1,1,0));
+                    vect3list.Add(new Vector3Int(0,0,0));
                     break;
         }
         return vect3list;

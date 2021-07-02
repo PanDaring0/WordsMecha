@@ -13,6 +13,11 @@ public class SkillSet
     public static string savingPath = "Assets/Resources/CharactorExcels/";
     public static string assetPath = "Assets/Resources/DataAssets/";
     public static Skill[] skills;
+
+    public SkillSet(string excelName)
+    {
+        this.excelName = excelName; 
+    }
     public void Start()
     {
         skills = SkillList(excelFolderPath);
