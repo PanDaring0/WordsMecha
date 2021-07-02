@@ -6,19 +6,21 @@ public class InputController : MonoBehaviour
 {
     public Camera camera;
     private SkillRelease release;
+    private SkillSet set;
     private Skill skillSelected;//当前选中的技能 
-    private Character player;
+    private Hero player;
     private MapScript mapScript;
     private Vector3 mousePositionOnScreen;
     private Vector3 mouseWorldPosition;
-    public int borderX = 0;
+    private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
     public int energyRemained = 0;//本回合剩余的能量
 
     public void Start()
     {
-        player = new Character();
+        player = new Hero(name);
         release = new SkillRelease(player);
         mapScript = new MapScript();
+        set = new SkillSet(player.name);//读取人物的技能表
     }
 
     public void Update()
@@ -38,9 +40,18 @@ public class InputController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(!((mouseWorldPosition.x>=-2.8&&mouseWorldPosition.x<=2.8&&mouseWorldPosition.x>=-5&&mouseWorldPosition.x<=-3.5)
-            ||true))
-                SelectGrid();
+            float x = mouseWorldPosition.x;
+            float y = mouseWorldPosition.y;
+
+            if(mode == 0)
+                Debug.Log("请选择技能");
+            else if(mode == 1)
+            {
+                //Skill
+            }
+            else if(mode == 2)
+            {
+            }
         }
 
     }
@@ -57,17 +68,13 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            SelectGrid();
+            SelectGrid(rangeList);
         }
 
     }
 
-    public Vector3Int SelectGrid()
+    public Vector3Int SelectGrid(List<Vector3Int> rangeList)
     {
-        while(Input.GetMouseButtonDown(0))
-        {
-
-        }
         return new Vector3Int(0,0,0);
     }
     public void SelectSkill()
@@ -82,8 +89,6 @@ public class InputController : MonoBehaviour
             Debug.Log("剩余能量不足！");
             return;
         }
-
-
         //选定的动画效果
     }
 
