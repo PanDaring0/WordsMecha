@@ -12,9 +12,10 @@
     public int skillBuffType;//0-无，1-加攻击，2-加防御，3-减攻击，4-减防御，5-眩晕
     public int skillBuffTime;
     public int skillBuffImpact;//buff效果数值
+    public int unlocked;//是否已解锁
     
     //新建技能
-    public Skill(int num,int type,string name,int cost,int range,int maxnum,int remained,int damage,int damagerange,int movecount,int bufftype,int bufftime,int buffimpact)
+    public Skill(int num,int type,string name,int cost,int range,int maxnum,int remained,int damage,int damagerange,int movecount,int bufftype,int bufftime,int buffimpact,int ul)
     {
         skillNum = num;
         skillName = name;
@@ -29,5 +30,6 @@
         skillBuffType = bufftype;
         skillBuffTime = bufftime;
         skillBuffImpact = buffimpact;
+        unlocked = ul;
     }
 }

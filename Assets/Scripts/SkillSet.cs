@@ -12,7 +12,7 @@ public class SkillSet
     public string excelName = "";//需要打开的文件名
     public static string savingPath = "Assets/Resources/CharactorExcels/";
     public static string assetPath = "Assets/Resources/DataAssets/";
-    public static Skill[] skills;
+    public Skill[] skills;
 
     public SkillSet(string excelName)
     {
@@ -28,7 +28,7 @@ public class SkillSet
         DataRowCollection collect = ReadExcel(filePath, ref columnNum, ref rowNum);
 
         Skill[] skilllist = new Skill[rowNum -1];
-        int num,type,cost,range,maxnum,remained,damage,damageRange,movecount,bufftime,bufftype,buffimpact;
+        int num,type,cost,range,maxnum,remained,damage,damageRange,movecount,bufftime,bufftype,buffimpact,ul;
         string name = "";
         for(int i = 0;i<totalNum;i++)
         {
@@ -45,7 +45,8 @@ public class SkillSet
             bufftime = int.Parse(collect[i][10].ToString());
             bufftype = int.Parse(collect[i][11].ToString());
             buffimpact = int.Parse(collect[i][12].ToString());
-            Skill skill = new Skill(num,type,name,cost,range,maxnum,remained,damage,damageRange,movecount,bufftype,bufftime,buffimpact);
+            ul = int.Parse(collect[i][13].ToString());
+            Skill skill = new Skill(num,type,name,cost,range,maxnum,remained,damage,damageRange,movecount,bufftype,bufftime,buffimpact,ul);
             skilllist[i] = skill;
         }
         return skilllist;

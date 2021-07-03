@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
 {
     private SkillRelease release;
     private SkillSet set;
+    public static int s_skill;
     public Skill skillSelected;//当前选中的技能 
     private Hero player;
     private MapScript mapScript;
@@ -92,6 +93,37 @@ public class InputController : MonoBehaviour
         selectedGrid = mapScript.getCellPosition(mouseWorldPosition);
     }
 
+    //按钮事件
+    public void SelectSkill()
+    {
+        if(s_skill!=0)
+        {
+            //判断技能是否可用
+            if(set.skills[s_skill].skillRemained < 0)
+            {
+                Debug.Log("技能剩余量不足！");
+                return;
+            }
+            if(set.skills[s_skill].skillCost > energyRemained)
+            {
+                Debug.Log("剩余能量不足！");
+                return;
+            }
+            if(set.skills[s_skill].unlocked == 0)
+            {
+                Debug.Log("未解锁此技能！");
+                return;
+            }
+        
+        //选定的动画效果
+
+        SkillRangeHandle();
+        newAction.actionType = 1;
+        newAction.skillNum = s_skill;
+
+        }        
+    }
+
     //输出技能的可选范围
     public void SkillRangeHandle()
     {
@@ -111,27 +143,7 @@ public class InputController : MonoBehaviour
         selectedGrid = new Vector3Int(0,0,0);
     }
 
-    //选中技能时
-    public void SelectSkill()
-    {
-        //返回技能
-        if(skillSelected.skillRemained < 0)
-        {
-            Debug.Log("技能剩余量不足！");
-            return;
-        }
-        if(skillSelected.skillCost > energyRemained)
-        {
-            Debug.Log("剩余能量不足！");
-            return;
-        }
-        //选定的动画效果
-
-        SkillRangeHandle();
-        newAction.actionType = 1;
-        newAction.skillNum = 114514;///////
-    }
-
+    //确认选中的格子
     public bool GridConfirm()
     {
         if(selectedGrid == mapScript.getCellPosition(mouseWorldPosition))
@@ -139,13 +151,6 @@ public class InputController : MonoBehaviour
         else
             return false;
     }
-
-
-    private bool Filed()
-    {
-        return true;
-    }
-
 
     public void RayCheck()
     {
