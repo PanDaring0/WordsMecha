@@ -15,6 +15,7 @@ public class MapScript : MonoBehaviour
     public Vector3Int birthPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
+    public List<GameObject> gameObjectList = null;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,11 @@ public class MapScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool instantiateInCell(Vector3Int position,GameObject prefab)
+    {
+        return false;
     }
 
     public static int disBetweenPosition(Vector3Int A,Vector3Int B)
