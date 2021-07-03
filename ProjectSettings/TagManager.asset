@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - UI
+=======
+  - Hero
+  - Enemy
+>>>>>>> c5fd2baf4e57b9b923fc4ca143b1f6109958ab69
   layers:
   - Default
   - TransparentFX

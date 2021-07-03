@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
-
+/*
+保存地图格子和上面的游戏对象
+*/
 public class MapScript : MonoBehaviour
 {
     public int width, height;
@@ -13,6 +15,7 @@ public class MapScript : MonoBehaviour
     public Vector3Int birthPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
+    public List<GameObject> gameObjectList = null;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,11 @@ public class MapScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool instantiateInCell(Vector3Int position,GameObject prefab)
+    {
+        return false;
     }
 
     public static int disBetweenPosition(Vector3Int A,Vector3Int B)
@@ -89,7 +97,7 @@ public class MapScript : MonoBehaviour
         else return true;
     }
 
-    public void initMapCells()
+    public void initMapCells()//根据Tile的类型初始化地面类型，分为地面，墙壁，陷阱，之后需要修改tile名称
     {
         for (int i = 1; i <= width; i++)
         {
