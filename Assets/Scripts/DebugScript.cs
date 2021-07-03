@@ -7,11 +7,13 @@ public class DebugScript : MonoBehaviour
 {
     public Tilemap tilemap;
     public TileBase tile;
+   // public GameObject gameObject;
     //public Camera camera;
     //public Ray ray;
     // Start is called before the first frame update
     void Start()
     {
+        //gameObject.GetComponent<Character>().atk = 10;
         //ray = camera.ScreenPointToRay(new Vector3(0, 0, 0));
         //Debug.Log(ray.origin);
         //Debug.Log(ray.direction);
