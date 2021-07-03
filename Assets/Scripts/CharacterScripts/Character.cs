@@ -14,4 +14,6 @@ public class Character : MonoBehaviour
     public SkillRelease release;
     public MapScript mapScript;
 
+    public bool moveable;//是否结束行动
+
 }

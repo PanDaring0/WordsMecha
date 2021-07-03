@@ -14,14 +14,10 @@ public class InputController : MonoBehaviour
     private Vector3 mouseWorldPosition;
     private float x;
     private float y;
-    private static bool selectable;//是否可以选择方块，即系统是否位于UI层
+    private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
     private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
     public int energyRemained = 0;//本回合剩余的能量
     
-
-
-
-
     public void Start()
     {
         player = new Hero(name);
@@ -33,8 +29,8 @@ public class InputController : MonoBehaviour
     public void Update()
     {
         MouseFlow();
-        MouseClick();
         RayCheck();
+        MouseClick();
     }
 
     //鼠标坐标获取
@@ -48,13 +44,15 @@ public class InputController : MonoBehaviour
 
     public void MouseClick()
     {
-        if(!selectable)
+        if(UIselect)
             return;
 
         if(Input.GetMouseButtonDown(0))
         {
             if(mode == 0)
-                Debug.Log("请选择技能");
+            {
+
+            }
             else if(mode == 1)
             {
                 //Skill
@@ -66,6 +64,10 @@ public class InputController : MonoBehaviour
 
     }
 
+    public void GridSelect()
+    {
+        
+    }
 
     public void SkillHandle()
     {
@@ -116,21 +118,19 @@ public class InputController : MonoBehaviour
 
     public void RayCheck()
     {
-        if(Input.GetMouseButton(0)){
-        //从摄像机发出到点击坐标的射线
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
         if(Physics.Raycast(ray,out hitInfo)){
             //划出射线，只有在scene视图中才能看到
             Debug.DrawLine(ray.origin,hitInfo.point);
             GameObject gameObj = hitInfo.collider.gameObject;
-            Debug.Log("click object name is " + gameObj.name);
-            //当射线碰撞目标为boot类型的物品，执行拾取操作
+            //检测是否为UI
             if(string.Equals(gameObj.tag,"UI"))
             {
-                Debug.Log("pickup!");
+                UIselect = true;
             }
+            else
+                UIselect = false;
         }
-    }
     }
 }
