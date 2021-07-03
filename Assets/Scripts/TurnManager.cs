@@ -32,16 +32,16 @@ public class TurnManager : MonoBehaviour
         heroAndEnemyNum = 0;
         turnStatus = TurnStatus.heroTurn;
         gameObjectList = mapGameObject.GetComponent<MapScript>().gameObjectList;
-        foreach(GameObject k in gameObjectList)
+        foreach(GameObject gobj in gameObjectList)
         {
-            if(string.Equals(k.tag,"Hero"))
+            if(string.Equals(gobj.tag,"Hero"))
             {
-                //设为回合内
+                gobj.GetComponent<Character>().moveable = true;
                 heroAndEnemyNum++;
             }
-            else if(string.Equals(k.tag, "Enemy"))
+            else if(string.Equals(gobj.tag, "Enemy"))
             {
-                //设为回合外
+                gobj.GetComponent<Character>().moveable = false;
                 heroAndEnemyNum++;
             }
         }
@@ -50,11 +50,37 @@ public class TurnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach(GameObject k in gameObjectList)
+        foreach(GameObject gobj in gameObjectList)
         {
-            if (false)
+            if (heroAndEnemyNum == 1)
             {
-
+                return;
+            }
+            if(gobj.GetComponent<Character>().moveable == true)
+            {
+                return;
+            }
+        }
+        if (turnStatus == TurnStatus.heroTurn)
+        {
+            turnStatus = TurnStatus.enemyTurn;
+            foreach(GameObject gobj in gameObjectList)
+            {
+                if (string.Equals(gobj.tag, "Enemy"))
+                {
+                    gobj.GetComponent<Character>().moveable = true;
+                }
+            }
+        }
+        if (turnStatus == TurnStatus.enemyTurn)
+        {
+            turnStatus = TurnStatus.heroTurn;
+            foreach (GameObject gobj in gameObjectList)
+            {
+                if (string.Equals(gobj.tag, "Hero"))
+                {
+                    gobj.GetComponent<Character>().moveable = true;
+                }
             }
         }
     }
