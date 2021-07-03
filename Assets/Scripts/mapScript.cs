@@ -12,7 +12,7 @@ public class MapScript : MonoBehaviour
     public Tilemap tilemap;
     public MapCellType[,] mapCellTypes = new MapCellType[50, 50];
     public GameObject[,] gameObjectGroup = null;
-    public Vector3Int birthPoint;
+    public Vector3Int heroPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
     public List<GameObject> gameObjectList = null;
@@ -83,6 +83,13 @@ public class MapScript : MonoBehaviour
 
     public void initGameObject()
     {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject gobj in enemys)
+        {
+            gameObjectList.Add(gobj);
+            Vector3Int position = getCellPosition(gobj.transform.position);
+            gameObjectGroup[position.x, position.y] = gobj;
+        }
     }
 
     public MapCellType getMapType(Vector3Int v)

@@ -13,7 +13,33 @@ public class Character : MonoBehaviour
     public List<Buff> bufflist;
     public SkillRelease release;
     public MapScript mapScript;
+    public GameObject map;
 
     public bool moveable;//是否结束行动
 
+    void Start()
+    {
+        mapScript = map.GetComponent<MapScript>();
+    }
+
+    public bool move(Vector3Int position)
+    {
+        if(mapScript.gameObjectGroup[position.x,position.y] != null)
+        {
+            return false;
+        }
+        if(mapScript.mapCellTypes[position.x,position.y] == MapCellType.obstacle)
+        {
+            return false;
+        }
+        Vector3Int nowPosition = mapScript.getCellPosition(transform.position);
+        mapScript.gameObjectGroup[nowPosition.x, nowPosition.y] = null;
+        mapScript.gameObjectGroup[position.x, position.y] = this.gameObject;
+        if (string.Equals(this.tag,"Hero"))
+        {
+            mapScript.heroPoint = position;
+        }
+
+        return true;
+    }
 }
