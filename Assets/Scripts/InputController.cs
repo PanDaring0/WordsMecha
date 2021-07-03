@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
 {
     private SkillRelease release;
     private SkillSet set;
-    public static int s_skill;
+    public static int s_skill;//选中的技能
     public Skill skillSelected;//当前选中的技能 
     private Hero player;
     private MapScript mapScript;
@@ -16,8 +16,8 @@ public class InputController : MonoBehaviour
     private float y;
     private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
     private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
-    private Vector3 selectedGrid;
-    private Vector3 position;
+    private Vector3Int selectedGrid;
+    private Vector3Int position;
     private List<Vector3Int> range;
     public int energyRemained = 0;//本回合剩余的能量
     public List<Action> actions;//指令序列
@@ -29,9 +29,9 @@ public class InputController : MonoBehaviour
         release = GetComponent<SkillRelease>();
         mapScript = GameObject.FindWithTag("Map").GetComponent<MapScript>();
         set = new SkillSet(player.name);//读取人物的技能表
-        selectedGrid = new Vector3();
+        selectedGrid = new Vector3Int();
         newAction = new Action();
-        position = new Vector3(0,0,0);
+        position = mapScript.birthPoint;
     }
 
     public void Update()
@@ -55,16 +55,16 @@ public class InputController : MonoBehaviour
         if(UIselect)
             return;
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonUp(0))
         {
-            if(mode == 0)
+            if(mode == 0)//未选技能
             {
                 SelectMoveGrid();
                 newAction.actionNum++;
                 newAction.actionType = 0;//移动
                 mode = 2;
             }
-            else if(mode == 1)
+            else if(mode == 1)//已选技能
             {
                 SelectSkillGrid();   
                 //输出范围，在范围内选择
@@ -73,7 +73,21 @@ public class InputController : MonoBehaviour
             {
                 if(GridConfirm())
                 {
+                    actions.Add(newAction);
                     //添加至命令单
+                    if(newAction.actionType == 1)//如果是技能
+                    {
+                        position = position + (newAction.target-newAction.pos)*skillSelected.moveCount;
+                        skillSelected = null;
+                        s_skill = 0;
+                    }
+                    else
+                    {
+                        position = newAction.target;
+                    }
+
+                    mode = 0;
+
                 }
                 else
                 {
@@ -93,7 +107,7 @@ public class InputController : MonoBehaviour
         selectedGrid = mapScript.getCellPosition(mouseWorldPosition);
     }
 
-    //按钮事件
+    //选定技能
     public void SelectSkill()
     {
         if(s_skill!=0)
@@ -120,6 +134,8 @@ public class InputController : MonoBehaviour
         SkillRangeHandle();
         newAction.actionType = 1;
         newAction.skillNum = s_skill;
+        newAction.pos = position;
+        mode = 1;
 
         }        
     }
@@ -139,7 +155,25 @@ public class InputController : MonoBehaviour
 
     public void SelectSkillGrid()
     {
+        bool inRange = false;
         Vector3Int select = mapScript.getCellPosition(mouseWorldPosition);
+        foreach (Vector3Int grid in range)
+        {
+            if(grid == select)
+                inRange = true;
+        }
+        if(inRange)
+        {
+            selectedGrid = select;
+            newAction.target = selectedGrid;
+
+            mode = 2;
+            return;
+        }
+        else
+        {
+            Debug.Log("");
+        }
         selectedGrid = new Vector3Int(0,0,0);
     }
 
