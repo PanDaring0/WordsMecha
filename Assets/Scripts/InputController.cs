@@ -62,6 +62,14 @@ public class InputController : MonoBehaviour
             else if(mode == 2)
             {
                 if(GridConfirm())
+                {
+
+                }
+                else
+                {
+                    mode = 0;
+                    Debug.Log("");
+                }
             }
         }
 
