@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character
+public class Character : MonoBehaviour
 {
     public Vector3Int position;
     public int health = 100;
