@@ -83,6 +83,13 @@ public class MapScript : MonoBehaviour
 
     public void initGameObject()
     {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject gobj in enemys)
+        {
+            gameObjectList.Add(gobj);
+            Vector3Int position = getCellPosition(gobj.transform.position);
+            gameObjectGroup[position.x, position.y] = gobj;
+        }
     }
 
     public MapCellType getMapType(Vector3Int v)
