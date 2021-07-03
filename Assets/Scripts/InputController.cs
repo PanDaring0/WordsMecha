@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public Camera camera;
     private SkillRelease release;
     private SkillSet set;
     private Skill skillSelected;//当前选中的技能 
@@ -12,10 +11,11 @@ public class InputController : MonoBehaviour
     private MapScript mapScript;
     private Vector3 mousePositionOnScreen;
     private Vector3 mouseWorldPosition;
-    private float x;
+    private float x;//鼠标的世界坐标x
     private float y;
     private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
     private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
+    private Vector3 selectedGrid;
     public int energyRemained = 0;//本回合剩余的能量
     
     public void Start()
@@ -24,6 +24,7 @@ public class InputController : MonoBehaviour
         release = new SkillRelease(player);
         mapScript = new MapScript();
         set = new SkillSet(player.name);//读取人物的技能表
+        selectedGrid = new Vector3();
     }
 
     public void Update()
@@ -51,7 +52,8 @@ public class InputController : MonoBehaviour
         {
             if(mode == 0)
             {
-
+                SelectMoveGrid();
+                mode = 2;
             }
             else if(mode == 1)
             {
@@ -59,14 +61,15 @@ public class InputController : MonoBehaviour
             }
             else if(mode == 2)
             {
+                if(GridConfirm())
             }
         }
 
     }
 
-    public void GridSelect()
+    public void SelectMoveGrid()
     {
-        
+
     }
 
     public void SkillHandle()
@@ -80,12 +83,12 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            SelectGrid(rangeList);
+            SelectSkillGrid(rangeList);
         }
 
     }
 
-    public Vector3Int SelectGrid(List<Vector3Int> rangeList)
+    public Vector3Int SelectSkillGrid(List<Vector3Int> rangeList)
     {
         return new Vector3Int(0,0,0);
     }
