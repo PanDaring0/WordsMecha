@@ -6,7 +6,11 @@ public class Action
 {
     public int actionNum;
     public int actionType;//移动或技能
-    public int x;
-    public int y;
+    public int skillNum;
+    public int positionX;
+    public int positionY;
+
+    public int targetX;
+    public int targetY;
     
 }
