@@ -63,4 +63,15 @@ public class SkillSet
         rowNum = result.Tables[0].Rows.Count;
         return result.Tables[0].Rows;
     }
+
+    public int MinCost()
+    {
+        int min = 20;
+        foreach (Skill skill in skills)
+        {
+            if(skill.skillCost<min)
+                min = skill.skillCost;
+        }
+        return min;
+    }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SkillRelease : MonoBehaviour
 {
-    public Character user;
+    public Character player;
 
-    public SkillRelease(Character character)
+    //综合处理
+    public void SkillHandle(Skill skill)
     {
-        user = character;
+
     }
     
     //施放技能的最大范围
@@ -60,9 +61,9 @@ public class SkillRelease : MonoBehaviour
     }
     
     //位移
-    public void Move(Vector3Int position)
+    public void Move(Vector3Int target)
     {
-        user.position = position;
+        player.position = target;
     }
 
     //伤害计算

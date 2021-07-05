@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,22 +16,26 @@ public class InputController : MonoBehaviour
     private float y;
     private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
     private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
+    public int minCost;//技能中最低消耗
+
     private Vector3Int selectedGrid;
     private Vector3Int position;
     private List<Vector3Int> range;
     public int energyRemained = 0;//本回合剩余的能量
+    public int moveCost = 1;//移动所需能量
     public List<Action> actions;//指令序列
     public Action newAction;
     
     public void Start()
     {
-        player = new Hero(name);
+        player = GetComponent<Hero>(); 
         release = GetComponent<SkillRelease>();
         mapScript = GameObject.FindWithTag("Map").GetComponent<MapScript>();
         set = new SkillSet(player.name);//读取人物的技能表
         selectedGrid = new Vector3Int();
         newAction = new Action();
-        position = mapScript.birthPoint;
+        position = mapScript.heroPoint;
+        minCost = set.MinCost();
     }
 
     public void Update()
@@ -60,7 +64,6 @@ public class InputController : MonoBehaviour
             if(mode == 0)//未选技能
             {
                 SelectMoveGrid();
-                newAction.actionNum++;
                 newAction.actionType = 0;//移动
                 mode = 2;
             }
@@ -74,28 +77,40 @@ public class InputController : MonoBehaviour
                 if(GridConfirm())
                 {
                     actions.Add(newAction);
-                    //添加至命令单
+
                     if(newAction.actionType == 1)//如果是技能
                     {
+                        //位移技能可能导致下一个初始点移动
                         position = position + (newAction.target-newAction.pos)*skillSelected.moveCount;
                         skillSelected = null;
                         s_skill = 0;
+                        energyRemained -= set.skills[newAction.skillNum].skillCost;
+                        set.skills[newAction.skillNum].skillRemained--;
                     }
-                    else
+                    else if(newAction.actionType == 0)//如果是移动
                     {
+                        //下一个初始点变为本次的目标点
                         position = newAction.target;
+                        energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                     }
 
                     mode = 0;
+                    newAction.actionNum++;//读取下一条指令
 
                 }
                 else
                 {
-                    if(newAction.actionType == 0)
+                    if(newAction.actionType == 0)//移动
+                    {
                         mode = 0;
-                    else
+                        s_skill = 0;
+                    }
+                    
+                    else//技能
+                    {
                         mode = 1;
-                    Debug.Log("reselect");
+                        Debug.Log("reselect");
+                    }
                 }
             }
         }
@@ -185,6 +200,24 @@ public class InputController : MonoBehaviour
         else
             return false;
     }
+
+    //读取列表，施放技能
+    public void ActionRelease()
+    {
+        for(int i = 0 ; i < actions.Count ;i++)
+        {
+            if(actions[i].actionType == 0)//移动
+            {
+                release.Move(actions[i].target);
+
+            }
+            else if(actions[i].actionType == 1)
+            {
+                release.SkillHandle(set.skills[actions[i].skillNum]);
+            }
+        }
+    }
+
 
     public void RayCheck()
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : Character
+public class EndButton : MonoBehaviour
 {
-    public string name;
+    public bool end;
 
-    public Hero()
+    public void Onclick()
     {
         
     }
