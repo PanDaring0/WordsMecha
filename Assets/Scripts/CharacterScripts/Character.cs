@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
     public int def = 10;
     public int status = 0;//控制状态，0-正常，1-眩晕
     public bool done = false;
-    public List<Buff> bufflist;
+    public List<Buff> bufflist;//buff的状态清单
     public SkillRelease release;
     public MapScript mapScript;
     public GameObject map;

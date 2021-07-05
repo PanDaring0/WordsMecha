@@ -9,13 +9,12 @@ public class InputController : MonoBehaviour
     public static int s_skill;//选中的技能
     public Skill skillSelected;//当前选中的技能 
     private Hero player;
-    private MapScript mapScript;
     private Vector3 mousePositionOnScreen;
     private Vector3 mouseWorldPosition;
     private float x;//鼠标的世界坐标x
     private float y;
     private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
-    private int mode = 0;//0-未选择技能，1-选格子，2-确认格子
+    private int mode = 0;//0-未选择技能，1-选格子，2-确认格子，3-清单生成完毕
     public int minCost;//技能中最低消耗
 
     private Vector3Int selectedGrid;
@@ -30,11 +29,10 @@ public class InputController : MonoBehaviour
     {
         player = GetComponent<Hero>(); 
         release = GetComponent<SkillRelease>();
-        mapScript = GameObject.FindWithTag("Map").GetComponent<MapScript>();
         set = new SkillSet(player.name);//读取人物的技能表
         selectedGrid = new Vector3Int();
         newAction = new Action();
-        position = mapScript.heroPoint;
+        position = release.map.heroPoint;
         minCost = set.MinCost();
     }
 
@@ -43,6 +41,7 @@ public class InputController : MonoBehaviour
         MouseFlow();
         RayCheck();
         MouseClick();
+        End();
     }
 
     //鼠标坐标获取
@@ -54,6 +53,7 @@ public class InputController : MonoBehaviour
         y = mouseWorldPosition.y;
     }
 
+    //鼠标点击事件的综合处理
     public void MouseClick()
     {
         if(UIselect)
@@ -80,8 +80,9 @@ public class InputController : MonoBehaviour
 
                     if(newAction.actionType == 1)//如果是技能
                     {
-                        //位移技能可能导致下一个初始点移动
-                        position = position + (newAction.target-newAction.pos)*skillSelected.moveCount;
+                        //位移技能使下一个初始点移动
+                        release.SkillMove(position,newAction.target);
+
                         skillSelected = null;
                         s_skill = 0;
                         energyRemained -= set.skills[newAction.skillNum].skillCost;
@@ -93,7 +94,12 @@ public class InputController : MonoBehaviour
                         position = newAction.target;
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                     }
-
+                    else//结束回合
+                    {
+                        player.def += energyRemained;
+                        energyRemained = 0;
+                        mode = 3;
+                    }
                     mode = 0;
                     newAction.actionNum++;//读取下一条指令
 
@@ -119,7 +125,7 @@ public class InputController : MonoBehaviour
 
     public void SelectMoveGrid()
     {
-        selectedGrid = mapScript.getCellPosition(mouseWorldPosition);
+        selectedGrid = release.map.getCellPosition(mouseWorldPosition);
     }
 
     //选定技能
@@ -171,7 +177,7 @@ public class InputController : MonoBehaviour
     public void SelectSkillGrid()
     {
         bool inRange = false;
-        Vector3Int select = mapScript.getCellPosition(mouseWorldPosition);
+        Vector3Int select = release.map.getCellPosition(mouseWorldPosition);
         foreach (Vector3Int grid in range)
         {
             if(grid == select)
@@ -195,7 +201,7 @@ public class InputController : MonoBehaviour
     //确认选中的格子
     public bool GridConfirm()
     {
-        if(selectedGrid == mapScript.getCellPosition(mouseWorldPosition))
+        if(selectedGrid == release.map.getCellPosition(mouseWorldPosition))
             return true;
         else
             return false;
@@ -213,11 +219,16 @@ public class InputController : MonoBehaviour
             }
             else if(actions[i].actionType == 1)
             {
-                release.SkillHandle(set.skills[actions[i].skillNum]);
+                release.SkillHandle(set.skills[actions[i].skillNum],actions[i].target);
             }
         }
     }
 
+    public void End()
+    {
+        if(mode == 3)
+            ActionRelease();    
+    }
 
     public void RayCheck()
     {
