@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum RoomType
 {
-    fight,shop,randomEvent
+    fight,shop,randomEvent,cleared
 }
