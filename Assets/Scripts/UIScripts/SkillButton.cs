@@ -9,6 +9,7 @@ public class SkillButton : MonoBehaviour
     public void Start()
     {
         GetComponent<Button>().onClick.AddListener(ReturnSkill);
+        skillNum = int.Parse(name);
     }
 
     //返回选中的技能
