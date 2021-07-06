@@ -6,19 +6,22 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour
 {
     SkillButton[] skillButtons;
+    public GameObject prefab_atk;
+    public GameObject prefab_tec;
+    public GameObject prefab_Joker;
     void Start()
     {
-        skillButtons = GetComponentsInChildren<SkillButton>();
-        foreach (SkillButton skillbutton in skillButtons)
+        
+        for(;;)
         {
-            string name = skillbutton.gameObject.name;
-            Image img = skillbutton.gameObject.GetComponentInChildren<Image>();
+
+            //SkillButton newPre = GameObject.Instantiate();
+
         }
     }
 
-    private Texture2D LoadImage(string imageName)
+    private void CreatePreButton()
     {
-        Texture2D texture2D = Resources.Load(imageName) as Texture2D;
-        return texture2D;
+
     }
 }

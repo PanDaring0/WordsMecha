@@ -330,13 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100ebee0493a83f4abcaa03205b1f3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 9
-  height: 4
-  tilemap: {fileID: 1278382476}
-  heroPoint: {x: 0, y: 0, z: 0}
-  doorPoints: []
-  roomType: 0
-  gameObjectList: []
 --- !u!4 &517535632
 Transform:
   m_ObjectHideFlags: 0
@@ -2854,7 +2847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1699512973
 Grid:
   m_ObjectHideFlags: 0
@@ -3417,6 +3410,7 @@ MonoBehaviour:
   map: {fileID: 517535630}
   moveable: 0
   name: 
+  activeSkills: 01000000020000000300000004000000
 --- !u!114 &2015960879
 MonoBehaviour:
   m_ObjectHideFlags: 0

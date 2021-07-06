@@ -18,10 +18,7 @@ public class SkillSet
     {
         this.excelName = excelName; 
     }
-    public void Start()
-    {
-        skills = SkillList(excelFolderPath);
-    }
+    
     public Skill[] SkillList(string filePath)
     {
         int columnNum = 0, rowNum = 0;
