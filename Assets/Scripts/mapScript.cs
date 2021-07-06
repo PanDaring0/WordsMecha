@@ -28,7 +28,12 @@ public class MapScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3Int vector = tilemap.WorldToCell(ray.GetPoint(-ray.origin.z / ray.direction.z));
+        if (tilemap.HasTile(vector))
+        {
+            tilemap.SetColor(vector, Color.red);
+        }
     }
 
     public bool instantiateInCell(Vector3Int position,GameObject prefab)
