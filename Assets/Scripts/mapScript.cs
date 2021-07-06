@@ -15,7 +15,7 @@ public class MapScript : MonoBehaviour
     public Vector3Int heroPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
-    public List<GameObject> gameObjectList = null;
+    public List<GameObject> gameObjectList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -54,12 +54,12 @@ public class MapScript : MonoBehaviour
 
     public List<GameObject> getGameObjectList(List<Vector3Int> positionList)
     {
-        List<GameObject> gameObjectList = new List<GameObject>();
+        List<GameObject> gameObjectListHere = new List<GameObject>();
         foreach (Vector3Int k in positionList)
         {
-            gameObjectList.Add(getCellGameObject(k));
+            gameObjectListHere.Add(getCellGameObject(k));
         }
-        return gameObjectList;
+        return gameObjectListHere;
     }
 
     public GameObject getCellGameObject(Vector3Int position)
@@ -95,6 +95,11 @@ public class MapScript : MonoBehaviour
             Vector3Int position = getCellPosition(gobj.transform.position);
             gameObjectGroup[position.x, position.y] = gobj;
         }
+        GameObject hero = GameObject.FindGameObjectWithTag("Hero");
+        gameObjectList.Add(hero);
+        Vector3Int heroPosition = getCellPosition(hero.transform.position);
+        gameObjectGroup[heroPosition.x, heroPosition.y] = hero;
+        heroPoint = heroPosition;
     }
 
     public MapCellType getMapType(Vector3Int v)
