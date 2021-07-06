@@ -29,15 +29,17 @@ public class InputController : MonoBehaviour
     {
         player = GetComponent<Hero>(); 
         release = GetComponent<SkillRelease>();
+        actions = new List<Action>();
 
         selectedGrid = new Vector3Int();
         newAction = new Action();
 
         release.ReleaseStart();
         position = release.map.heroPoint;
-        set = new SkillSet(player.name);//读取人物的技能表
+
+        set = new SkillSet(player.gameObject.name);//读取人物的技能表
         set.SkillList(SkillSet.excelFolderPath);
-        minCost = set.MinCost();
+        //minCost = set.MinCost(player);
     }
 
     public void Update()

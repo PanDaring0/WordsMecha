@@ -8,7 +8,7 @@ using Excel;
 public class SkillSet
 {
     public int totalNum = 0;
-    public static string excelFolderPath = Application.dataPath + "/Excels/";
+    public static string excelFolderPath = Application.dataPath + "/Resources/Excels/";
     public string excelName = "";//需要打开的文件名
     public static string savingPath = "Assets/Resources/CharactorExcels/";
     public static string assetPath = "Assets/Resources/DataAssets/";
@@ -16,13 +16,13 @@ public class SkillSet
 
     public SkillSet(string excelName)
     {
-        this.excelName = excelName; 
+        this.excelName = excelName + ".xlsm"; 
     }
     
     public Skill[] SkillList(string filePath)
     {
         int columnNum = 0, rowNum = 0;
-        DataRowCollection collect = ReadExcel(filePath, ref columnNum, ref rowNum);
+        DataRowCollection collect = ReadExcel(filePath + excelName, ref columnNum, ref rowNum);
 
         Skill[] skilllist = new Skill[rowNum -1];
         int num,type,cost,range,maxnum,remained,damage,damageRange,movecount,bufftime,bufftype,buffimpact,ul;
@@ -61,7 +61,7 @@ public class SkillSet
         return result.Tables[0].Rows;
     }
 
-    public int MinCost()
+    public int MinCost(Hero player)
     {
         int min = 20;
         foreach (Skill skill in skills)
