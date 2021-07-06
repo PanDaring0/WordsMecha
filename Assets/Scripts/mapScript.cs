@@ -11,7 +11,7 @@ public class MapScript : MonoBehaviour
     public int width, height;
     public Tilemap tilemap;
     public MapCellType[,] mapCellTypes = new MapCellType[50, 50];
-    public GameObject[,] gameObjectGroup = null;
+    public GameObject[,] gameObjectGroup = new GameObject[50,50];
     public Vector3Int heroPoint;
     public Vector3Int[] doorPoints;
     public RoomType roomType;
@@ -98,6 +98,9 @@ public class MapScript : MonoBehaviour
         GameObject hero = GameObject.FindGameObjectWithTag("Hero");
         gameObjectList.Add(hero);
         Vector3Int heroPosition = getCellPosition(hero.transform.position);
+        //Debug.Log(heroPosition);
+        //gameObjectGroup[8, 5] = hero;
+        //Debug.Log(gameObjectGroup[8, 8]);
         gameObjectGroup[heroPosition.x, heroPosition.y] = hero;
         heroPoint = heroPosition;
     }
@@ -121,17 +124,20 @@ public class MapScript : MonoBehaviour
             for (int j = 1; j <= height; j++)
             {
                 TileBase tile = tilemap.GetTile(new Vector3Int(i, j, 0));
-                if (tile.name == "test_0")
+                if (tile != null)
                 {
-                    mapCellTypes[i, j] = MapCellType.obstacle;
-                }
-                else if (tile.name == "test_1")
-                {
-                    mapCellTypes[i, j] = MapCellType.ground;
-                }
-                else if (tile.name == "test_3")
-                {
-                    mapCellTypes[i, j] = MapCellType.trap;
+                    if (tile.name == "test_0")
+                    {
+                        mapCellTypes[i, j] = MapCellType.obstacle;
+                    }
+                    else if (tile.name == "test_1")
+                    {
+                        mapCellTypes[i, j] = MapCellType.ground;
+                    }
+                    else if (tile.name == "test_3")
+                    {
+                        mapCellTypes[i, j] = MapCellType.trap;
+                    }
                 }
             }
         }
