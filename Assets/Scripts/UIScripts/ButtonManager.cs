@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
-    
+    SkillButton[] skillButtons;
     void Start()
     {
-        GameObject.FindWithTag("SkillButton");
+        skillButtons = GetComponentsInChildren<SkillButton>();
     }
 }
