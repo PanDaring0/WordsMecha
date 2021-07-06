@@ -7,10 +7,11 @@ public class SkillRelease : MonoBehaviour
     public Character user;
     public MapScript map;
 
-    public void Start()
+    public void ReleaseStart()
     {
         map = GameObject.FindWithTag("Map").GetComponent<MapScript>();
         user = GetComponent<Character>();
+        
     }
 
     //综合处理

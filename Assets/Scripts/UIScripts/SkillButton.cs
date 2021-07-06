@@ -16,7 +16,6 @@ public class SkillButton : MonoBehaviour
     public void ReturnSkill()
     {   
         InputController.s_skill = skillNum;
-        //切换图片
     }
 
 }
