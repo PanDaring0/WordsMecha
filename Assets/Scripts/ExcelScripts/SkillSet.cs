@@ -5,46 +5,47 @@ using UnityEditor;
 using UnityEngine;
 using Excel;
 
-public class SkillSet
+[System.Serializable]
+public class SkillSet : ScriptableObject
 {
-    public int totalNum = 0;
-    public static string excelFolderPath = Application.dataPath + "/Resources/Excels/";
-    public string excelName = "";//需要打开的文件名
+    public int totalNum = 5;
+    public static string excelsFolderPath = Application.dataPath + "/Resources/Excels/";
+    public string excelName = "";//需要打开的文件名(不含后缀)
     public static string savingPath = "Assets/Resources/CharactorExcels/";
     public static string assetPath = "Assets/Resources/DataAssets/";
     public Skill[] skills;
-
-    public SkillSet(string excelName)
-    {
-        this.excelName = excelName + ".xlsm"; 
-    }
     
+    public SkillSet(string name)
+    {
+        excelName = name;
+    }
+
     public Skill[] SkillList(string filePath)
     {
         int columnNum = 0, rowNum = 0;
-        DataRowCollection collect = ReadExcel(filePath + excelName, ref columnNum, ref rowNum);
+        DataRowCollection collect = ReadExcel(filePath + excelName + ".xlsm", ref columnNum, ref rowNum);
 
         Skill[] skilllist = new Skill[rowNum -1];
         int num,type,cost,range,maxnum,remained,damage,damageRange,movecount,bufftime,bufftype,buffimpact,ul;
         string name = "";
-        for(int i = 0;i<totalNum;i++)
+        for(int i = 1;i<totalNum;i++)
         {
             num = int.Parse(collect[i][0].ToString());
+            name = collect[i][1].ToString();
             type = int.Parse(collect[i][2].ToString());
             cost = int.Parse(collect[i][3].ToString());
-            name = collect[i][1].ToString();
             range = int.Parse(collect[i][4].ToString());
             maxnum = int.Parse(collect[i][5].ToString());
             remained = int.Parse(collect[i][6].ToString());
             damage = int.Parse(collect[i][7].ToString());
             damageRange = int.Parse(collect[i][8].ToString());
             movecount = int.Parse(collect[i][9].ToString());
-            bufftime = int.Parse(collect[i][10].ToString());
-            bufftype = int.Parse(collect[i][11].ToString());
+            bufftime = int.Parse(collect[i][11].ToString());
+            bufftype = int.Parse(collect[i][10].ToString());
             buffimpact = int.Parse(collect[i][12].ToString());
             ul = int.Parse(collect[i][13].ToString());
             Skill skill = new Skill(num,type,name,cost,range,maxnum,remained,damage,damageRange,movecount,bufftype,bufftime,buffimpact,ul);
-            skilllist[i] = skill;
+            skilllist[i-1] = skill;
         }
         return skilllist;
     }

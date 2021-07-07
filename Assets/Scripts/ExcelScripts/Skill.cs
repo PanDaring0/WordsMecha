@@ -1,4 +1,6 @@
-﻿public class Skill
+﻿
+[System.Serializable]
+public class Skill
 {
     public int skillNum;//技能编号
     public int skillType;//0-攻击,1-属性,2-王牌
@@ -32,4 +34,7 @@
         skillBuffImpact = buffimpact;
         unlocked = ul;
     }
+
+    public Skill()
+    {}
 }

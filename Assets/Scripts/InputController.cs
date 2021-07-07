@@ -37,8 +37,8 @@ public class InputController : MonoBehaviour
         release.ReleaseStart();
         position = release.map.heroPoint;
 
-        set = new SkillSet(player.gameObject.name);//读取人物的技能表
-        set.SkillList(SkillSet.excelFolderPath);
+        set = new SkillSet(player.name);//读取人物的技能表
+        AssetBuilder.CreateSkillAsset(set);
         //minCost = set.MinCost(player);
     }
 
@@ -228,6 +228,7 @@ public class InputController : MonoBehaviour
                 release.SkillHandle(set.skills[actions[i].skillNum],actions[i].target);
             }
         }
+        AssetBuilder.CreateSkillAsset(set);
     }
 
     public void End()

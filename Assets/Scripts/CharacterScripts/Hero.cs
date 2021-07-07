@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Hero : Character
 {
-    public string name;
-    public int[] activeSkills = {1,2,3,4};
+    public string heroName;
+    public int[] activeSkills = {100,102,103,104};
 
-    public Hero()
-    {
-        
-    }
-    
 }
