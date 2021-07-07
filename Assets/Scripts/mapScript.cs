@@ -16,39 +16,70 @@ public class MapScript : MonoBehaviour
     public Vector3Int[] doorPoints;
     public RoomType roomType;
     public List<GameObject> gameObjectList = new List<GameObject>();
-    public List<Vector3Int> DamageHighLight = new List<Vector3Int>();
-    public List<Vector3Int> SkillReleaseRangeHighLight = new List<Vector3Int>();
+    public HashSet<Vector3Int> DamageHighLight = new HashSet<Vector3Int>();
+    public HashSet<Vector3Int> SkillReleaseRangeHighLight = new HashSet<Vector3Int>();
+    public Color damageColor, skillReleaseRangeColor;
+    public GameObject turnManager;
 
     // Start is called before the first frame update
     void Start()
     {
         initMapCells();
         initGameObject();
-
+        turnManager.GetComponent<TurnManager>().initTurnManager();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3Int vector = tilemap.WorldToCell(ray.origin);
-        if (tilemap.HasTile(vector))
+        updateColor();
+    }
+
+    public void updateColor()
+    {
+        for(int i = 1; i <= width; i++)
         {
-            //Debug.Log(vector);
-            //tilemap.SetColor(vector, new Color(0,255,0,1));
-            //setCellColor(vector, Color.blue);
-            //Debug.Log(tilemap.GetColor(vector));
+            for(int j = 1; j <= height; j++)
+            {
+                Vector3Int v = new Vector3Int(i, j, 0);
+                if (DamageHighLight.Contains(v - getMouseCellPosition()))
+                {
+                    setCellColor(v, damageColor);
+                }
+                else if (SkillReleaseRangeHighLight.Contains(v - heroPoint))
+                {
+                    setCellColor(v, skillReleaseRangeColor);
+                }
+                else
+                {
+                    setCellColor(v, Color.white);
+                }
+            }
         }
+    }
+
+    public Vector3Int getMouseCellPosition()
+    {
+        Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return getCellPosition(v);
     }
 
     public void setDamageHighLight(List<Vector3Int> positionList)
     {
-        
+        DamageHighLight.Clear();
+        foreach(Vector3Int position in positionList)
+        {
+            DamageHighLight.Add(position);
+        }
     }
 
     public void setSkillReleaseRangeHighLight(List<Vector3Int> positionList)
     {
-
+        SkillReleaseRangeHighLight.Clear();
+        foreach (Vector3Int position in positionList)
+        {
+            SkillReleaseRangeHighLight.Add(position);
+        }
     }
 
     public void setCellColor(Vector3Int position,Color color)

@@ -26,25 +26,30 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void initTurnManager()
     {
         heroAndEnemyNum = 0;
         turnStatus = TurnStatus.heroTurn;
         gameObjectList = mapGameObject.GetComponent<MapScript>().gameObjectList;
-        foreach(GameObject gobj in gameObjectList)
+        foreach (GameObject gobj in gameObjectList)
         {
-            if(string.Equals(gobj.tag,"Hero"))
+            if (string.Equals(gobj.tag, "Hero"))
             {
                 gobj.GetComponent<Character>().moveable = true;
                 heroAndEnemyNum++;
             }
-            else if(string.Equals(gobj.tag, "Enemy"))
+            else if (string.Equals(gobj.tag, "Enemy"))
             {
                 gobj.GetComponent<Character>().moveable = false;
                 heroAndEnemyNum++;
             }
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     // Update is called once per frame

@@ -5,14 +5,26 @@ using UnityEngine.Tilemaps;
 
 public class DebugScript : MonoBehaviour
 {
-    public Tilemap tilemap;
-    public TileBase tile;
+    public GameObject map;
+    public MapScript mapScript;
+    public List<Vector3Int> list = new List<Vector3Int>();
+    //public Tilemap tilemap;
+    //public TileBase tile;
    // public GameObject gameObject;
     //public Camera camera;
     //public Ray ray;
     // Start is called before the first frame update
     void Start()
     {
+        mapScript = map.GetComponent<MapScript>();
+        list.Add(new Vector3Int(1, 0, 0));
+        list.Add(new Vector3Int(0, -1, 0));
+        list.Add(new Vector3Int(-1,0, 0));
+        list.Add(new Vector3Int(0, 1, 0));
+        list.Add(new Vector3Int(0, 0, 0));
+        mapScript.setDamageHighLight(list);
+        mapScript.setSkillReleaseRangeHighLight(list);
+
         //gameObject.GetComponent<Character>().atk = 10;
         //ray = camera.ScreenPointToRay(new Vector3(0, 0, 0));
         //Debug.Log(ray.origin);
