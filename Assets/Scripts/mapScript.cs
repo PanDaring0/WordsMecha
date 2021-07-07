@@ -35,6 +35,23 @@ public class MapScript : MonoBehaviour
         updateColor();
     }
 
+    public List<Vector3Int> findPath(Vector3Int S,Vector3Int T)
+    {
+        List<Vector3Int> pathList = null;
+        bool[,] isChecked = new bool[50,50];
+        SortedList list = new SortedList();
+        Vector2Int[,] fromPosition = new Vector2Int[50,50];
+        isChecked[S.x,S.y] = true;
+        list.Add(disBetweenPosition(S, T), new Vector2Int(S.x, S.y));
+        while (true)
+        {
+            break;
+        }
+
+
+        return pathList;
+    }
+
     public void updateColor()
     {
         for(int i = 1; i <= width; i++)
