@@ -16,6 +16,8 @@ public class MapScript : MonoBehaviour
     public Vector3Int[] doorPoints;
     public RoomType roomType;
     public List<GameObject> gameObjectList = new List<GameObject>();
+    public List<Vector3Int> DamageHighLight = new List<Vector3Int>();
+    public List<Vector3Int> SkillReleaseRangeHighLight = new List<Vector3Int>();
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +31,35 @@ public class MapScript : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3Int vector = tilemap.WorldToCell(ray.GetPoint(-ray.origin.z / ray.direction.z));
+        Vector3Int vector = tilemap.WorldToCell(ray.origin);
         if (tilemap.HasTile(vector))
         {
-            tilemap.SetColor(vector, Color.red);
+            //Debug.Log(vector);
+            //tilemap.SetColor(vector, new Color(0,255,0,1));
+            //setCellColor(vector, Color.blue);
+            //Debug.Log(tilemap.GetColor(vector));
+        }
+    }
+
+    public void setDamageHighLight(List<Vector3Int> positionList)
+    {
+        
+    }
+
+    public void setSkillReleaseRangeHighLight(List<Vector3Int> positionList)
+    {
+
+    }
+
+    public void setCellColor(Vector3Int position,Color color)
+    {
+        if (isPositionInMap(position))
+        {
+            Tile tile = (Tile)tilemap.GetTile(position);
+            tile.color = color;
+            tilemap.RefreshTile(position);
+            //Debug.Log(tilemap.GetColor(position));
+            tile.color = Color.white;
         }
     }
 
