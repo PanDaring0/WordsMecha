@@ -32,13 +32,13 @@ public class Character : MonoBehaviour
         {
             return false;
         }
-        Vector3Int nowPosition = mapScript.getCellPosition(transform.position);
-        mapScript.gameObjectGroup[nowPosition.x, nowPosition.y] = null;
+        mapScript.gameObjectGroup[position.x, position.y] = null;
         mapScript.gameObjectGroup[pos.x, pos.y] = this.gameObject;
         if (string.Equals(this.tag,"Hero"))
         {
             mapScript.heroPoint = pos;
         }
+        position = pos;
 
         return true;
     }
