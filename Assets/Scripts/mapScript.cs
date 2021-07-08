@@ -38,17 +38,57 @@ public class MapScript : MonoBehaviour
     public List<Vector3Int> findPath(Vector3Int S,Vector3Int T)
     {
         List<Vector3Int> pathList = null;
-        bool[,] isChecked = new bool[50,50];
+        int[,] F = new int[50,50];
         SortedList list = new SortedList();
-        Vector2Int[,] fromPosition = new Vector2Int[50,50];
-        isChecked[S.x,S.y] = true;
-        list.Add(disBetweenPosition(S, T), new Vector2Int(S.x, S.y));
-        while (true)
+        Vector3Int[,] fromPosition = new Vector3Int[50,50];
+        List<Vector3Int> dir = new List<Vector3Int>();
+        dir.Add(Vector3Int.left);
+        dir.Add(Vector3Int.right);
+        dir.Add(Vector3Int.up);
+        dir.Add(Vector3Int.down);
+        F[S.x,S.y] = 0;
+        list.Add(disBetweenPosition(S, T), S);
+        while (list.Count != 0)
         {
-            break;
+            Vector3Int nowP = (Vector3Int)list.GetByIndex(0);
+            list.RemoveAt(0);
+            foreach (Vector3Int v in dir)
+            {
+                Vector3Int newP = nowP + v;
+                if (Vector3Int.Equals(newP, S))
+                {
+                    continue;
+                }
+                if(isPositionInMap(newP) == false)
+                {
+                    continue;
+                }
+                if(gameObjectGroup[newP.x,newP.y] != null)
+                {
+                    continue;
+                }
+                if(getMapType(newP) == MapCellType.obstacle)
+                {
+                    continue;
+                }
+                if (F[newP.x, newP.y] == 0 || F[nowP.x, nowP.y] + 1 < F[newP.x, newP.y])
+                {
+                    F[newP.x, newP.y] = F[nowP.x, nowP.y] + 1;
+                    fromPosition[newP.x, newP.y] = nowP;
+                    list.Add(disBetweenPosition(newP, T) + F[newP.x, newP.y], newP);
+                }
+            }
         }
-
-
+        list.Clear();
+        if(F[T.x,T.y] == 0)
+        {
+            return null;
+        }
+        for(Vector3Int v = T;v!= Vector3Int.zero;v = fromPosition[v.x, v.y])
+        {
+            pathList.Add(v);
+        }
+        pathList.Reverse();
         return pathList;
     }
 
