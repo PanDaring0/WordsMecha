@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 445356193}
   - component: {fileID: 445356192}
   m_Layer: 5
-  m_Name: Button
+  m_Name: 100
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,10 +531,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 1
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 855148889}
   - component: {fileID: 855148888}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: 102
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,7 +872,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -2684,7 +2684,7 @@ GameObject:
   - component: {fileID: 1526580839}
   - component: {fileID: 1526580838}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: 101
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3142,7 +3142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1897541159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3241,7 +3241,7 @@ GameObject:
   - component: {fileID: 1917116774}
   - component: {fileID: 1917116773}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: 103
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3471,7 +3471,7 @@ MonoBehaviour:
   mapScript: {fileID: 0}
   map: {fileID: 517535630}
   moveable: 0
-  name: 
+  heroName: 
   activeSkills: 01000000020000000300000004000000
 --- !u!114 &2015960879
 MonoBehaviour:
@@ -3485,6 +3485,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3347effeb185b498507129ad31adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSelected:
+    skillNum: 0
+    skillType: 0
+    skillName: 
+    skillCost: 0
+    skillMaxNum: 0
+    skillRemained: 0
+    skillRange: 0
+    skillDamage: 0
+    skillDamageRange: 0
+    moveCount: 0
+    skillBuffType: 0
+    skillBuffTime: 0
+    skillBuffImpact: 0
+    unlocked: 0
   minCost: 0
   energyRemained: 0
   moveCost: 1
