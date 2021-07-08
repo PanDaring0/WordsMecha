@@ -32,7 +32,7 @@ public static class SceneMap
         System.Array.Clear(sceneId, 0, sceneId.Length);
         System.Array.Clear(isGridInSet, 0, sceneId.Length);
         System.Array.Clear(scenePoint, 0, scenePoint.Length);
-        sortedList.Add(Random.Range(0, 1000),new Vector2Int(15,15));
+        sortedList.Add(Random.Range(0, 100000),new Vector2Int(15,15));
         isGridInSet[15, 15] = true;
         for(int i = 1; i <= sceneNumInLevel; i++)
         {
@@ -44,7 +44,7 @@ public static class SceneMap
             {
                 if(isGridInSet[v.x + k.x,v.y+k.y] == false)
                 {
-                    sortedList.Add(Random.Range(0,1000),new Vector2Int(v.x + k.x, v.y + k.y));
+                    sortedList.Add(Random.Range(0,100000),new Vector2Int(v.x + k.x, v.y + k.y));
                     isGridInSet[v.x + k.x, v.y + k.y] = true;
                 }
             }

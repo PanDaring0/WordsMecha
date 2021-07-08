@@ -37,9 +37,9 @@ public class MapScript : MonoBehaviour
 
     public List<Vector3Int> findPath(Vector3Int S,Vector3Int T)
     {
-        List<Vector3Int> pathList = null;
+        List<Vector3Int> pathList = new List<Vector3Int>();
         int[,] F = new int[50,50];
-        SortedList list = new SortedList();
+        SortedList list = new SortedList(new MyComparer());
         Vector3Int[,] fromPosition = new Vector3Int[50,50];
         List<Vector3Int> dir = new List<Vector3Int>();
         dir.Add(Vector3Int.left);

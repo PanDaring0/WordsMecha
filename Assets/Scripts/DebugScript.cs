@@ -22,9 +22,13 @@ public class DebugScript : MonoBehaviour
         list.Add(new Vector3Int(-1,0, 0));
         list.Add(new Vector3Int(0, 1, 0));
         list.Add(new Vector3Int(0, 0, 0));
-        mapScript.setDamageHighLight(list);
-        mapScript.setSkillReleaseRangeHighLight(list);
-
+        //mapScript.setDamageHighLight(list);
+        //mapScript.setSkillReleaseRangeHighLight(list);
+        //List<Vector3Int> pathList = mapScript.findPath(new Vector3Int(15,3,0), new Vector3Int(8,5,0));
+        //foreach(Vector3Int v in pathList)
+        //{
+        //    Debug.Log(v);
+        //}
         //gameObject.GetComponent<Character>().atk = 10;
         //ray = camera.ScreenPointToRay(new Vector3(0, 0, 0));
         //Debug.Log(ray.origin);
