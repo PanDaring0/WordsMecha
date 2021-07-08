@@ -6,6 +6,7 @@ public class SkillRelease : MonoBehaviour
 {
     public Character user;
     public MapScript map;
+    public static float damageAffect;//背单词的效果
 
     public void ReleaseStart()
     {
@@ -97,6 +98,7 @@ public class SkillRelease : MonoBehaviour
     public void DamageEnemy(GameObject enemy,int damage)
     {
         enemy.GetComponent<Character>().health -= damage;
+
     }
 
     //伤害计算
