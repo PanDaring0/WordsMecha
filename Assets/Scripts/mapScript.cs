@@ -20,6 +20,7 @@ public class MapScript : MonoBehaviour
     public HashSet<Vector3Int> SkillReleaseRangeHighLight = new HashSet<Vector3Int>();
     public Color damageColor, skillReleaseRangeColor;
     public GameObject turnManager;
+    public GameObject enemyAi;
 
     // Start is called before the first frame update
     void Start()
