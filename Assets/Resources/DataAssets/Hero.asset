@@ -28,7 +28,7 @@ MonoBehaviour:
     skillBuffType: 0
     skillBuffTime: 0
     skillBuffImpact: 0
-    unlocked: 0
+    unlocked: 1
   - skillNum: 101
     skillType: 1
     skillName: "\u84C4\u529B\u4E00\u51FB"
@@ -41,11 +41,11 @@ MonoBehaviour:
     moveCount: 0
     skillBuffType: 1
     skillBuffTime: 1
-    skillBuffImpact: 10
-    unlocked: 0
+    skillBuffImpact: 20
+    unlocked: 1
   - skillNum: 102
     skillType: 1
-    skillName: "\u5C04\u51FB"
+    skillName: "\u8FDC\u5C04"
     skillCost: 2
     skillMaxNum: 20
     skillRemained: 3
@@ -56,7 +56,7 @@ MonoBehaviour:
     skillBuffType: 0
     skillBuffTime: 0
     skillBuffImpact: 0
-    unlocked: 0
+    unlocked: 1
   - skillNum: 103
     skillType: 1
     skillName: "\u91CD\u51FB"
@@ -70,49 +70,7 @@ MonoBehaviour:
     skillBuffType: 0
     skillBuffTime: 0
     skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
-    skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
-    skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
-    skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
+    unlocked: 1
   - skillNum: 0
     skillType: 0
     skillName: 

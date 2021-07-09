@@ -79,7 +79,7 @@ public class SkillRelease : MonoBehaviour
     //位移
     public void Move(Vector3Int target)
     {
-        user.position = target;
+        user.Move(target);
     }
 
     //技能位移
