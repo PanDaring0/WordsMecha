@@ -9,6 +9,8 @@ public class ButtonManager : MonoBehaviour
     public GameObject prefab_atk;
     public GameObject prefab_tec;
     public GameObject prefab_Joker;
+    public GameObject prefab_Exit;
+    public GameObject hero;
     void Start()
     {
         

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,12 +36,12 @@ public class TurnManager : MonoBehaviour
         {
             if(string.Equals(gobj.tag,"Hero"))
             {
-                gobj.GetComponent<Character>().moveable = true;
+                gobj.GetComponent<Character>().movable = true;
                 heroAndEnemyNum++;
             }
             else if(string.Equals(gobj.tag, "Enemy"))
             {
-                gobj.GetComponent<Character>().moveable = false;
+                gobj.GetComponent<Character>().movable = false;
                 heroAndEnemyNum++;
             }
         }
@@ -56,7 +56,7 @@ public class TurnManager : MonoBehaviour
             {
                 return;
             }
-            if(gobj.GetComponent<Character>().moveable == true)
+            if(gobj.GetComponent<Character>().movable == true)
             {
                 return;
             }
@@ -68,7 +68,7 @@ public class TurnManager : MonoBehaviour
             {
                 if (string.Equals(gobj.tag, "Enemy"))
                 {
-                    gobj.GetComponent<Character>().moveable = true;
+                    gobj.GetComponent<Character>().movable = true;
                 }
             }
         }
@@ -79,7 +79,7 @@ public class TurnManager : MonoBehaviour
             {
                 if (string.Equals(gobj.tag, "Hero"))
                 {
-                    gobj.GetComponent<Character>().moveable = true;
+                    gobj.GetComponent<Character>().movable = true;
                 }
             }
         }

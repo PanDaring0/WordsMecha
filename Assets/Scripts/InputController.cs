@@ -39,14 +39,17 @@ public class InputController : MonoBehaviour
 
         set = new SkillSet(player.name);//读取人物的技能表
         AssetBuilder.CreateSkillAsset(set);
-        //minCost = set.MinCost(player);
+        minCost = set.MinCost(player);
     }
 
     public void Update()
     {
         MouseFlow();
         RayCheck();
-        MouseClick();
+        if(player.movable)
+        {
+            MouseClick();
+        }
         End();
     }
 
@@ -229,12 +232,15 @@ public class InputController : MonoBehaviour
             }
         }
         AssetBuilder.CreateSkillAsset(set);
+        player.movable = false;
     }
 
     public void End()
     {
         if(mode == 3)
-            ActionRelease();    
+        {
+            ActionRelease();  
+        }  
     }
 
     public void RayCheck()

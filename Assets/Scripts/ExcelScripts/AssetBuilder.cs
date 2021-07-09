@@ -56,7 +56,7 @@ public class AssetBuilder : MonoBehaviour
 
 
         //修改的数据保存到Asset文件中
-        void SaveToAsset(SkillSet set)
+        public static void SaveToAsset(SkillSet set)
         {
             for(int i = 0; i < set.totalNum;i++)
             {
@@ -67,7 +67,7 @@ public class AssetBuilder : MonoBehaviour
             Debug.Log("SaveToAsset Success");
         }
 
-        Skill GetNewSkill()
+        public static Skill GetNewSkill()
         {
             Skill skill = new Skill();
             /*for (int i = 0; i < itemFieldInfoArray.Length; i++)
