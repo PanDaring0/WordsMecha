@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     public MapScript mapScript;
     public GameObject map;
 
-    public bool moveable;//是否结束行动
+    public bool movable;//是否结束行动
 
     void Start()
     {

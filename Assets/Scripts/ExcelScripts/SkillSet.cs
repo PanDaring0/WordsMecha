@@ -65,10 +65,13 @@ public class SkillSet : ScriptableObject
     public int MinCost(Hero player)
     {
         int min = 20;
-        foreach (Skill skill in skills)
+        int[] activeSkills = player.GetComponent<Hero>().activeSkills;
+        for(int i = 0;i<activeSkills.Length;i++)
         {
-            if(skill.skillCost<min)
-                min = skill.skillCost;
+            if(skills[activeSkills[i]].skillCost<min)
+            {
+                min = skills[activeSkills[i]].skillCost;
+            }
         }
         return min;
     }
