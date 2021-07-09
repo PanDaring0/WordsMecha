@@ -22,7 +22,7 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
-    private void CreatePreButton()
+    private void CreatePreButton(Hero hero)
     {
 
     }

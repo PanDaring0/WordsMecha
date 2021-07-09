@@ -3245,7 +3245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1699512973
 Grid:
   m_ObjectHideFlags: 0
@@ -3806,7 +3806,7 @@ MonoBehaviour:
   release: {fileID: 0}
   mapScript: {fileID: 0}
   map: {fileID: 517535630}
-  moveable: 0
+  movable: 0
   heroName: 
   activeSkills: 01000000020000000300000004000000
 --- !u!114 &2015960879
