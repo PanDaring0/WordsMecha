@@ -900,8 +900,10 @@ MonoBehaviour:
   atk: 0
   def: 0
   status: 0
+  done: 0
   release: {fileID: 0}
   mapScript: {fileID: 0}
+  moveable: 0
   name: 
 --- !u!4 &1431406313
 Transform:
