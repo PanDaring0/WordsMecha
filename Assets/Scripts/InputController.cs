@@ -14,7 +14,7 @@ public class InputController : MonoBehaviour
     private float x;//鼠标的世界坐标x
     private float y;
     private static bool UIselect;//是否可以选择方块，即系统是否位于UI层
-    private int mode = 0;//0-未选择技能，1-选格子，2-确认格子，3-清单生成完毕
+    public static int mode = 0;//0-未选择技能，1-选格子，2-确认格子，3-清单生成完毕
     public int minCost;//技能中最低消耗
 
     private Vector3Int selectedGrid;
@@ -24,8 +24,10 @@ public class InputController : MonoBehaviour
     public int moveCost = 1;//移动所需能量
     public List<Action> actions;//指令序列
     public Action newAction;
+
+    public ActionBackground background;
     
-    public void Start()
+    void Start()
     {
         player = GetComponent<Hero>(); 
         release = GetComponent<SkillRelease>();
@@ -36,13 +38,34 @@ public class InputController : MonoBehaviour
 
         release.ReleaseStart();
         position = release.map.heroPoint;
+        Debug.Log(position);
 
         set = new SkillSet(player.name);//读取人物的技能表
         AssetBuilder.CreateSkillAsset(set);
         minCost = set.MinCost(player);
+        Test();
+        Debug.Log(position);
     }
 
-    public void Update()
+    //测试方法
+    public void Test()
+    {
+        Action action = new Action();
+        action.actionNum = 0;
+        action.actionType = 0;
+        action.skillNum = 0;
+        action.pos = player.position;
+        for(int i = 0;i<4;i++)
+        {
+            action.target = action.pos + new Vector3Int(1,1,1);
+            actions.Add(action);
+            action.pos = action.target;
+        }
+        //移动的处理
+        ActionRelease();
+    }
+
+    void Update()
     {
         MouseFlow();
         RayCheck();
@@ -231,7 +254,7 @@ public class InputController : MonoBehaviour
                 release.SkillHandle(set.skills[actions[i].skillNum],actions[i].target);
             }
         }
-        AssetBuilder.CreateSkillAsset(set);
+        AssetBuilder.SaveToAsset(set,player.name);
         player.movable = false;
     }
 
@@ -254,6 +277,7 @@ public class InputController : MonoBehaviour
             //检测是否为UI
             if(string.Equals(gameObj.tag,"UI"))
             {
+                //Debug.Log("UI");
                 UIselect = true;
             }
             else
