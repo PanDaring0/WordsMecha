@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         mapScript = map.GetComponent<MapScript>();
+        position = mapScript.getCellPosition(transform.position);
     }
 
     public bool Move(Vector3Int pos)
@@ -39,6 +40,7 @@ public class Character : MonoBehaviour
             mapScript.heroPoint = pos;
         }
         position = pos;
+        transform.position = mapScript.getCellCenter(position);
 
         return true;
     }

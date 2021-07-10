@@ -6,13 +6,14 @@ public class SkillRelease : MonoBehaviour
 {
     public Character user;
     public MapScript map;
+    public Animator animator;//动画状态机
     public static float damageAffect;//背单词的效果
 
     public void ReleaseStart()
     {
         map = GameObject.FindWithTag("Map").GetComponent<MapScript>();
         user = GetComponent<Character>();
-        
+        animator = GetComponent<Animator>();
     }
 
     //综合处理
@@ -77,9 +78,19 @@ public class SkillRelease : MonoBehaviour
     }
     
     //位移
-    public void Move(Vector3Int target)
+    public void Move(Vector3Int position,Vector3Int target)
     {
-        user.Move(target);
+        List<Vector3Int> targetPoints = map.findPath(position,target);
+        foreach (Vector3Int targetPoint in targetPoints)
+        {
+            AnimatorStateInfo stateinfo = animator.GetCurrentAnimatorStateInfo(0);
+            //如果播放完walk动画.
+            if((stateinfo.normalizedTime >= 1.0f)&&(stateinfo.IsName("HeroWalk_L")||stateinfo.IsName("HeroWalk_U")||stateinfo.IsName("HeroWalk_D")))
+            {
+                
+                user.Move(targetPoint);
+            }
+        }
     }
 
     //技能位移

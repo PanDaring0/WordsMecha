@@ -32,34 +32,35 @@ public class InputController : MonoBehaviour
         player = GetComponent<Hero>(); 
         release = GetComponent<SkillRelease>();
         actions = new List<Action>();
+        player.heroName = gameObject.name;
 
         selectedGrid = new Vector3Int();
         newAction = new Action();
 
         release.ReleaseStart();
         position = release.map.heroPoint;
-        Debug.Log(position);
 
         set = new SkillSet(player.name);//读取人物的技能表
         AssetBuilder.CreateSkillAsset(set);
         minCost = set.MinCost(player);
         Test();
-        Debug.Log(position);
     }
 
     //测试方法
     public void Test()
     {
         Action action = new Action();
-        action.actionNum = 0;
-        action.actionType = 0;
-        action.skillNum = 0;
         action.pos = player.position;
         for(int i = 0;i<4;i++)
         {
-            action.target = action.pos + new Vector3Int(1,1,1);
+            action.actionNum = i;
+            action.actionType = 0;
+            action.skillNum = 0;
+            action.target = action.pos + new Vector3Int(1,1,0);
+
             actions.Add(action);
-            action.pos = action.target;
+            action = new Action();
+            action.pos = actions[i].target;
         }
         //移动的处理
         ActionRelease();
@@ -242,19 +243,18 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void ActionRelease()
     {
-        for(int i = 0 ; i < actions.Count ;i++)
+        foreach (Action action in actions)
         {
-            if(actions[i].actionType == 0)//移动
+            if(action.actionType == 0)//移动
             {
-                release.Move(actions[i].target);
-
+                release.Move(action.pos,action.target);
             }
-            else if(actions[i].actionType == 1)
+            else if(action.actionType == 1)
             {
-                release.SkillHandle(set.skills[actions[i].skillNum],actions[i].target);
+                release.SkillHandle(set.skills[action.skillNum],action.target);
             }
         }
-        AssetBuilder.SaveToAsset(set,player.name);
+        AssetBuilder.SaveToAsset(set,player.heroName);
         player.movable = false;
     }
 

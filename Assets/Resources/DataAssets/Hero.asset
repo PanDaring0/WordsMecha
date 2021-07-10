@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baebfc734ae3ba144b88177eec1d624a, type: 3}
   m_Name: Hero
   m_EditorClassIdentifier: 
-  totalNum: 5
+  totalNum: 10
   excelName: Hero
   skills:
   - skillNum: 100
@@ -71,76 +71,76 @@ MonoBehaviour:
     skillBuffTime: 0
     skillBuffImpact: 0
     unlocked: 1
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
-    skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
+  - skillNum: 104
+    skillType: 1
+    skillName: "\u95EA\u51FB"
+    skillCost: 3
+    skillMaxNum: 10
+    skillRemained: 1
+    skillRange: 10
+    skillDamage: 20
+    skillDamageRange: 2
+    moveCount: 2
     skillBuffType: 0
     skillBuffTime: 0
     skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
+    unlocked: 1
+  - skillNum: 105
+    skillType: 2
+    skillName: "\u78E8\u5200"
+    skillCost: 1
+    skillMaxNum: 40
+    skillRemained: 1
+    skillRange: 40
     skillDamage: 0
-    skillDamageRange: 0
+    skillDamageRange: 1
     moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
+    skillBuffType: 2
+    skillBuffTime: 1
+    skillBuffImpact: 20
+    unlocked: 1
+  - skillNum: 106
+    skillType: 2
+    skillName: "\u84C4\u9510"
+    skillCost: 2
+    skillMaxNum: 20
+    skillRemained: 1
+    skillRange: 20
     skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
+    skillDamageRange: 1
+    moveCount: -4
+    skillBuffType: 2
+    skillBuffTime: 1
+    skillBuffImpact: 15
+    unlocked: 1
+  - skillNum: 107
+    skillType: 2
+    skillName: "\u7834\u7532"
+    skillCost: 2
+    skillMaxNum: 20
+    skillRemained: 3
+    skillRange: 20
     skillDamage: 0
-    skillDamageRange: 0
+    skillDamageRange: 2
     moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
+    skillBuffType: 4
+    skillBuffTime: 2
+    skillBuffImpact: 10
+    unlocked: 1
+  - skillNum: 108
+    skillType: 2
+    skillName: "\u5F31\u5316"
+    skillCost: 2
+    skillMaxNum: 10
+    skillRemained: 3
+    skillRange: 10
     skillDamage: 0
-    skillDamageRange: 0
+    skillDamageRange: 2
     moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
+    skillBuffType: 3
+    skillBuffTime: 2
+    skillBuffImpact: 10
+    unlocked: 1
   - skillNum: 0
     skillType: 0
     skillName: 

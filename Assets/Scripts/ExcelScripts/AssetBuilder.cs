@@ -60,7 +60,7 @@ public class AssetBuilder : MonoBehaviour
         public static void SaveToAsset(SkillSet skillSet,string name)
         {
             SkillSet set = Resources.Load<SkillSet>("DataAssets/"+name);
-            for(int i = 0;i < set.skills.Length;i++)
+            for(int i = 0;i < set.totalNum;i++)
             {
                 set.skills[i] = skillSet.skills[i];
             }
