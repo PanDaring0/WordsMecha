@@ -9,13 +9,13 @@ public class Enemy : Character
 
     public void Escape()
     {
-        skillRelease.SkillHandle(skillSet.skills[3], new Vector3Int(1, 1, 1));
+        skillRelease.SkillHandle(skillSet.skills[3], mapScript.heroPoint);
     }
 
 
     public void Chase()
     {
-
+        
     }
 
     public void Start()

@@ -39,6 +39,7 @@ public class Character : MonoBehaviour
             mapScript.heroPoint = pos;
         }
         position = pos;
+        transform.position = mapScript.getCellCenter(position);
 
         return true;
     }
