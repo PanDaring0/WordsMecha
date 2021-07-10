@@ -14,12 +14,28 @@ public class Character : MonoBehaviour
     public SkillRelease release;
     public MapScript mapScript;
     public GameObject map;
+    public bool isTransformMoving = false;
+    public float speed = 0.005f;
+    public Vector3 transShouldBe;
 
     public bool movable;//是否结束行动
 
     void Start()
     {
         mapScript = map.GetComponent<MapScript>();
+    }
+
+    public void TransFormUpdate()
+    {
+        if (Vector3.Distance(transform.position, transShouldBe) > 0.1f)
+        {
+            transform.position = transform.position + speed * (transShouldBe - transform.position);
+        }
+        else
+        {
+            transform.position = transShouldBe;
+            isTransformMoving = false;
+        }
     }
 
     public bool Move(Vector3Int pos)
@@ -39,7 +55,9 @@ public class Character : MonoBehaviour
             mapScript.heroPoint = pos;
         }
         position = pos;
-        transform.position = mapScript.getCellCenter(position);
+        //transform.position = mapScript.getCellCenter(position);
+        isTransformMoving = true;
+        transShouldBe = mapScript.getCellCenter(position);
 
         return true;
     }
