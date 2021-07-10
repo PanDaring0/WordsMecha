@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
         mapScript = map.GetComponent<MapScript>();
     }
 
-    public bool move(Vector3Int pos)
+    public bool Move(Vector3Int pos)
     {
         if(mapScript.gameObjectGroup[pos.x,pos.y] != null)
         {
