@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     public MapScript mapScript;
     public GameObject map;
     public bool isTransformMoving = false;
-    public float speed = 0.005f;
+    public float speed = 0.5f;
     public Vector3 transShouldBe;
 
     public bool movable;//是否结束行动
@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, transShouldBe) > 0.1f)
         {
-            transform.position = transform.position + speed * (transShouldBe - transform.position);
+            transform.position = transform.position + speed * (transShouldBe - transform.position) * Time.deltaTime;
         }
         else
         {
