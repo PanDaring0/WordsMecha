@@ -38,6 +38,16 @@ public class Character : MonoBehaviour
         }
     }
 
+    public bool MovePath(Vector3Int pos)
+    {
+        List <Vector3Int> pathList = mapScript.findPath(position, pos);
+        foreach(Vector3Int p in pathList)
+        {
+            Move(p);
+        }
+        return true;
+    }
+
     public bool Move(Vector3Int pos)
     {
         if(mapScript.gameObjectGroup[pos.x,pos.y] != null)
