@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        
+        TransFormUpdate();
     }
 
     public void TransFormUpdate()
