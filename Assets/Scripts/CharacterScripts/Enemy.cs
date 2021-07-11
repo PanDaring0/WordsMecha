@@ -18,7 +18,7 @@ public class Enemy : Character
     {
         posiblePositionList.Clear();
         heroPoint = mapScript.heroPoint;
-        if(MapScript.disBetweenPosition(position,heroPoint) < 3)
+        if (MapScript.disBetweenPosition(position, heroPoint) < 3)
         {
             for (int i = 0; i <= 3; i++)
             {

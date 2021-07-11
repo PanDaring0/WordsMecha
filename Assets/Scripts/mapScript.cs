@@ -43,7 +43,6 @@ public class MapScript : MonoBehaviour
         SortedList list = new SortedList(new MyComparer());
         Vector3Int[,] fromPosition = new Vector3Int[50,50];
         List<Vector3Int> dir = new List<Vector3Int>();
-        Vector3Int nearT = S;
         dir.Add(Vector3Int.left);
         dir.Add(Vector3Int.right);
         dir.Add(Vector3Int.up);
@@ -54,10 +53,6 @@ public class MapScript : MonoBehaviour
         {
             Vector3Int nowP = (Vector3Int)list.GetByIndex(0);
             list.RemoveAt(0);
-            if (disBetweenPosition(nearT, T) > disBetweenPosition(nowP, T))
-            {
-                nearT = nowP;
-            }
             foreach (Vector3Int v in dir)
             {
                 Vector3Int newP = nowP + v;
@@ -86,7 +81,11 @@ public class MapScript : MonoBehaviour
             }
         }
         list.Clear();
-        for(Vector3Int v = nearT;v!= Vector3Int.zero;v = fromPosition[v.x, v.y])
+        if(F[T.x,T.y] == 0)
+        {
+            return null;
+        }
+        for(Vector3Int v = T;v!= Vector3Int.zero;v = fromPosition[v.x, v.y])
         {
             pathList.Add(v);
         }

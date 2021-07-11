@@ -26,6 +26,11 @@ public class Character : MonoBehaviour
         position = mapScript.getCellPosition(transform.position);
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void TransFormUpdate()
     {
         if (Vector3.Distance(transform.position, transShouldBe) > 0.1f)
@@ -37,16 +42,6 @@ public class Character : MonoBehaviour
             transform.position = transShouldBe;
             isTransformMoving = false;
         }
-    }
-
-    public bool MovePath(Vector3Int pos)
-    {
-        List <Vector3Int> pathList = mapScript.findPath(position, pos);
-        foreach(Vector3Int p in pathList)
-        {
-            Move(p);
-        }
-        return true;
     }
 
     public bool Move(Vector3Int pos)
