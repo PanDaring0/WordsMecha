@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class EndButton : MonoBehaviour
 {
-    public bool end;
 
     public void Onclick()
     {
-        
+        InputController.mode = 3;
     }
     
 }

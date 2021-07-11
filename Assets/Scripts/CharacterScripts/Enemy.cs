@@ -11,7 +11,7 @@ public class Enemy : Character
 
     public void addPositionToList()
     {
-
+        skillRelease.SkillHandle(skillSet.skills[3], mapScript.heroPoint);
     }
 
     public void Escape()

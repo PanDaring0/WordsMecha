@@ -19,15 +19,16 @@ public class AssetBuilder : MonoBehaviour
             }
 
             string assetPath = string.Format("{0}{1}.asset",SkillSet.assetPath,set.excelName);
+
             AssetDatabase.CreateAsset(set,assetPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();         
         }
 
         //写入xlsx文件，注意excel文件的后缀必须为.xlsx，若为.xls则无法读取到Workbook.Worksheets
-        public void WriteToExcel(SkillSet set)
+        public void WriteToExcel(SkillSet set,string name)
         {
-            SaveToAsset(set);
+            SaveToAsset(set,name);
     
             string path = SkillSet.excelsFolderPath + set.excelName + ".xlsm";
             FileInfo xlsxFile = new FileInfo(path);
@@ -56,26 +57,27 @@ public class AssetBuilder : MonoBehaviour
 
 
         //修改的数据保存到Asset文件中
-        public static void SaveToAsset(SkillSet set)
+        public static void SaveToAsset(SkillSet skillSet,string name)
         {
-            for(int i = 0; i < set.totalNum;i++)
+            SkillSet set = Resources.Load<SkillSet>("DataAssets/"+name);
+            for(int i = 0;i < set.totalNum;i++)
             {
-                SkillManager.Instance.skillArray[i] = GetNewSkill();
+                set.skills[i] = skillSet.skills[i];
             }
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("SaveToAsset Success");
         }
 
-        public static Skill GetNewSkill()
+        /*public static Skill GetNewSkill()
         {
             Skill skill = new Skill();
-            /*for (int i = 0; i < itemFieldInfoArray.Length; i++)
+            for (int i = 0; i < itemFieldInfoArray.Length; i++)
             {
                 var v = dataValues[i];
                 itemFieldInfoArray[i].SetValue(skill, v);
-            }*/
+            }
             return skill;
-        }
+        }*/
 
     }

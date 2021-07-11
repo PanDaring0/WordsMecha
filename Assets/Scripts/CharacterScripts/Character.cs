@@ -23,6 +23,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         mapScript = map.GetComponent<MapScript>();
+        position = mapScript.getCellPosition(transform.position);
     }
 
     public void TransFormUpdate()
@@ -65,7 +66,6 @@ public class Character : MonoBehaviour
             mapScript.heroPoint = pos;
         }
         position = pos;
-        //transform.position = mapScript.getCellCenter(position);
         isTransformMoving = true;
         transShouldBe = mapScript.getCellCenter(position);
 
