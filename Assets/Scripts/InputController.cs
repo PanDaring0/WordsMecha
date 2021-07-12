@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
     private SkillRelease release;
     private SkillSet set;
     public static int s_skill;//选中的技能
+    public static bool skillSetted = false;//技能选择的初始化
     public Skill skillSelected;//当前选中的技能 
     private Hero player;
     private Vector3 mousePositionOnScreen;
@@ -19,8 +21,8 @@ public class InputController : MonoBehaviour
 
     private Vector3Int selectedGrid;
     private Vector3Int position;
-    private List<Vector3Int> range;
-    public int energyRemained = 0;//本回合剩余的能量
+    private List<Vector3Int> range = new List<Vector3Int>();
+    public int energyRemained;//本回合剩余的能量
     public int moveCost = 1;//移动所需能量
     public List<Action> actions;//指令序列
     public Action newAction;
@@ -29,6 +31,7 @@ public class InputController : MonoBehaviour
 
     public ActionBackground background;
     public SkillButtonManager manager;
+    public Text positionText;
     
     void Start()
     {
@@ -41,13 +44,17 @@ public class InputController : MonoBehaviour
         newAction = new Action();
 
         release.ReleaseStart();
-        position = release.map.heroPoint;
+        position = player.position;
+        Debug.Log(position);
 
         set = new SkillSet(gameObject.name);
         AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
         manager.CreatePreButton(set);
-        Test();
+        //Test();
+
+        energyRemained = 10;
+        //Debug.Log(energyRemained);
     }
 
     //测试方法
@@ -72,9 +79,11 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(mode);
         MouseFlow();
         RayCheck();
         SkillSelect();
+        TurnEndding();
         if(player.movable)
         {
             MouseClick();
@@ -83,6 +92,15 @@ public class InputController : MonoBehaviour
         {
             UpdateActionRelease();
         }
+    }
+
+    public void TurnEndding()
+    {
+        if(Input.GetKeyUp(KeyCode.KeypadEnter))
+        {
+            mode = 3;
+        }
+        
     }
 
     //鼠标坐标获取
@@ -112,6 +130,7 @@ public class InputController : MonoBehaviour
             {
                 SelectSkillGrid();   
                 //输出范围，在范围内选择
+                positionText.text = "(" + position.x.ToString() + "," + position.y.ToString() + ")";
             }
             else if(mode == 2)
             {
@@ -134,16 +153,19 @@ public class InputController : MonoBehaviour
                     {
                         //下一个初始点变为本次的目标点
                         position = newAction.target;
+                        //player.transform.position = newAction.target;
+                        Debug.Log(position);
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                         background.ShowAction(newAction,set);
                     }
                     else//结束回合
                     {
-                        Buff defendBuff = new Buff(2,1,energyRemained);
-                        player.bufflist.Add(defendBuff);
-                        energyRemained = 0;
                         mode = 3;
-                        manager.gameObject.SetActive(false);
+                        manager.gameObject.SetActive(false);//隐藏选技能界面
+                        newAction.actionType = 2;
+                        newAction.skillNum = energyRemained;
+                        energyRemained = 0;
+                        actions.Add(newAction);
                         return;
                     }
                     mode = 0;
@@ -162,23 +184,36 @@ public class InputController : MonoBehaviour
                     {
                         mode = 1;
                         Debug.Log("reselect");
+                        s_skill = 0;
+                        skillSetted = false;
                     }
                 }
             }
         }
 
+
+        if(Input.GetMouseButtonUp(1))
+        {
+            s_skill = 0;
+            mode = 0;
+            selectedGrid = new Vector3Int();
+        }
     }
 
     public void SelectMoveGrid()
     {
         selectedGrid = release.map.getCellPosition(mouseWorldPosition);
+        newAction.target = selectedGrid;
     }
 
     //选定技能
     public void SkillSelect()
     {
-        if(s_skill!=0)
+        if(s_skill!=0&&!skillSetted)
         {
+            skillSetted = true;
+            Debug.Log(set.skills[s_skill].skillName);
+            Debug.Log(energyRemained);
             //判断技能是否可用
             if(set.skills[s_skill].skillRemained < 0)
             {
@@ -209,14 +244,7 @@ public class InputController : MonoBehaviour
     //输出技能的可选范围
     public void SkillRangeHandle()
     {
-        if(skillSelected.skillRange==0)
-        {
-            range.Add(new Vector3Int(0,0,0));
-        }
-        else
-        {
-            range = release.ReleaseRange(skillSelected);
-        }
+        range = release.ReleaseRange(skillSelected);
     }
 
     public void SelectSkillGrid()
@@ -255,7 +283,7 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void UpdateActionRelease()
     {
-        if(player.isMoveReleasing)//如果正在动画状态
+        if(player.isMoveReleasing)//如果正在移动、攻击状态
         {
             return;
         }
@@ -284,8 +312,9 @@ public class InputController : MonoBehaviour
                     release.SkillHandle(set.skills[action.skillNum],action.target);
                 }
                 
-                //AssetBuilder.SaveToAsset(set,player.heroName);
+                AssetBuilder.SaveToAsset(set,player.heroName);
                 formalAction++;
+                Debug.Log(formalAction);
 
             }
         }
@@ -306,7 +335,9 @@ public class InputController : MonoBehaviour
                 UIselect = true;
             }
             else
+            {
                 UIselect = false;
+            }
         }
     }
 }

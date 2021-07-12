@@ -10,6 +10,8 @@ public class SkillButtonManager : MonoBehaviour
     public GameObject prefab_tec;
     public GameObject prefab_Joker;
     //public GameObject prefab_Exit;
+
+    public GameObject newPre;
     public Hero hero;
     void Start()
     {
@@ -22,18 +24,19 @@ public class SkillButtonManager : MonoBehaviour
         int activeNum = hero.activeSkills.Length;
         for(int i = 0;i < activeNum;i++)
         {
-            GameObject newPre = new GameObject();
+            newPre = new GameObject();
             Skill newSkill = set.skills[hero.activeSkills[i]];
-            if(newSkill.skillType == 0)
-                newPre = GameObject.Instantiate(prefab_atk);
             if(newSkill.skillType == 1)
+                newPre = GameObject.Instantiate(prefab_atk);
+            else if(newSkill.skillType == 2)
                 newPre = GameObject.Instantiate(prefab_tec);
-            if(newSkill.skillType == 2)
+            else if(newSkill.skillType == 3)
                 newPre = GameObject.Instantiate(prefab_Joker);
         
             newPre.transform.SetParent(transform);
             newPre.transform.position = new Vector3(-240 + 150*i,-145,0) + transform.position;
-            newPre.GetComponentInChildren<Text>().text = set.skills[hero.activeSkills[i]].skillName;
+            newPre.GetComponentInChildren<Text>().text = set.skills[hero.activeSkills[i]].skillName;  
+            newPre.GetComponent<SkillButton>().skillNum = set.skills[hero.activeSkills[i]].skillNum-100;     
         }
     }
 }

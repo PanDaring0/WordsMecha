@@ -8,7 +8,7 @@ using Excel;
 [System.Serializable]
 public class SkillSet : ScriptableObject
 {
-    public int totalNum = 10;
+    public int totalNum = 12;
     public static string excelsFolderPath = Application.dataPath + "/Resources/Excels/";
     public string excelName = "";//需要打开的文件名(不含后缀)
     public static string savingPath = "Assets/Resources/CharactorExcels/";

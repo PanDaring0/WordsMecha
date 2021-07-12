@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baebfc734ae3ba144b88177eec1d624a, type: 3}
   m_Name: Hero
   m_EditorClassIdentifier: 
-  totalNum: 10
+  totalNum: 12
   excelName: Hero
   skills:
   - skillNum: 100
@@ -141,34 +141,34 @@ MonoBehaviour:
     skillBuffTime: 2
     skillBuffImpact: 10
     unlocked: 1
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
+  - skillNum: 109
+    skillType: 2
+    skillName: "\u95F7\u68CD"
+    skillCost: 3
+    skillMaxNum: 5
+    skillRemained: 2
+    skillRange: 5
     skillDamage: 0
     skillDamageRange: 0
     moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
-  - skillNum: 0
-    skillType: 0
-    skillName: 
-    skillCost: 0
-    skillMaxNum: 0
-    skillRemained: 0
-    skillRange: 0
-    skillDamage: 0
-    skillDamageRange: 0
-    moveCount: 0
-    skillBuffType: 0
-    skillBuffTime: 0
-    skillBuffImpact: 0
-    unlocked: 0
+    skillBuffType: 5
+    skillBuffTime: 1
+    skillBuffImpact: 1
+    unlocked: 1
+  - skillNum: 110
+    skillType: 3
+    skillName: "\u5F31\u70B9\u7A81\u523A"
+    skillCost: 3
+    skillMaxNum: 5
+    skillRemained: 2
+    skillRange: 5
+    skillDamage: 50
+    skillDamageRange: 1
+    moveCount: 1
+    skillBuffType: 4
+    skillBuffTime: 2
+    skillBuffImpact: 10
+    unlocked: 1
   - skillNum: 0
     skillType: 0
     skillName: 
