@@ -48,8 +48,11 @@ public class Character : MonoBehaviour
         else
         {
             transform.position = transShouldBe;
-            isAnimatorMoving = false;
-            animator.SetBool("isWalking", false);
+            if (pathList.Count == 0)
+            {
+                isAnimatorMoving = false;
+                animator.SetBool("isWalking", false);
+            }
         }
     }
     

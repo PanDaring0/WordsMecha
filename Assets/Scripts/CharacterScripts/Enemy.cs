@@ -14,6 +14,12 @@ public class Enemy : Character
         skillRelease.SkillHandle(skillSet.skills[3], mapScript.heroPoint);
     }
 
+    public void TakeActions()
+    {
+        Escape();
+        movable = false;
+    }
+
     public void Escape()
     {
         posiblePositionList.Clear();
