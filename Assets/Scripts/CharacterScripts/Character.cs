@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Character : MonoBehaviour
     public Vector3 transShouldBe;
     public List<Vector3Int> pathList = new List<Vector3Int>();
     public Animator animator;
+    public Slider bloodBar;
 
     public bool movable;//是否结束行动
 
@@ -29,6 +31,7 @@ public class Character : MonoBehaviour
         position = mapScript.getCellPosition(transform.position);
         animator = GetComponent<Animator>();
         transShouldBe = transform.position;
+        bloodBar.value = (float)1.0 * health / 100;
     }
 
     private void Update()

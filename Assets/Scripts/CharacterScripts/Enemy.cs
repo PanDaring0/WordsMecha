@@ -57,6 +57,10 @@ public class Enemy : Character
 
     public void Start()
     {
+        mapScript = map.GetComponent<MapScript>();
+        position = mapScript.getCellPosition(transform.position);
+        animator = GetComponent<Animator>();
+        transShouldBe = transform.position;
         skillSet = new SkillSet("Enemy");
         skillRelease = GetComponent<SkillRelease>();
         skillRelease.ReleaseStart();
