@@ -17,6 +17,7 @@ public class ActionBackground : MonoBehaviour
     {
         GameObject pre = GameObject.Instantiate(pre_Action);
         pre.transform.SetParent(transform);
+        Debug.Log(pre.transform.name);
         
         pre.transform.position = new Vector3(-259f,120-40*actionNum,0) + transform.position;
         pre.GetComponent<ActionButton>().actionNum.text = action.actionNum.ToString();

@@ -251,7 +251,7 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void UpdateActionRelease()
     {
-        if(player.isTransformMoving)//如果正在动画状态
+        if(player.isAnimatorMoving)//如果正在动画状态
         {
             return;
         }
