@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
         mapScript = map.GetComponent<MapScript>();
         position = mapScript.getCellPosition(transform.position);
         animator = GetComponent<Animator>();
+        transShouldBe = transform.position;
     }
 
     private void Update()
