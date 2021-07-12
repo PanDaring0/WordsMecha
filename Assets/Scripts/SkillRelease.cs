@@ -78,19 +78,9 @@ public class SkillRelease : MonoBehaviour
     }
     
     //位移
-    public void Move(Vector3Int position,Vector3Int target)
+    public void Move(Vector3Int target)
     {
-        List<Vector3Int> targetPoints = map.findPath(position,target);
-        foreach (Vector3Int targetPoint in targetPoints)
-        {
-            AnimatorStateInfo stateinfo = animator.GetCurrentAnimatorStateInfo(0);
-            //如果播放完walk动画.
-            if((stateinfo.normalizedTime >= 1.0f)&&(stateinfo.IsName("HeroWalk_L")||stateinfo.IsName("HeroWalk_U")||stateinfo.IsName("HeroWalk_D")))
-            {
-                
-                user.Move(targetPoint);
-            }
-        }
+        user.Move(target);      
     }
 
     //技能位移

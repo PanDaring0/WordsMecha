@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +22,7 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
+    //根据主角选定的技能索引生成
     private void CreatePreButton(Hero hero)
     {
 

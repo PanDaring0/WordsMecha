@@ -40,8 +40,8 @@ public class InputController : MonoBehaviour
         release.ReleaseStart();
         position = release.map.heroPoint;
 
-        set = new SkillSet(player.name);//读取人物的技能表
-        AssetBuilder.CreateSkillAsset(set);
+        set = new SkillSet(gameObject.name);
+        AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
         Test();
     }
@@ -247,7 +247,7 @@ public class InputController : MonoBehaviour
         {
             if(action.actionType == 0)//移动
             {
-                release.Move(action.pos,action.target);
+                release.Move(action.target);
             }
             else if(action.actionType == 1)
             {
