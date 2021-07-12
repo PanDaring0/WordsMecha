@@ -36,6 +36,10 @@ public class Enemy : Character
                 }
             }
         }
+        if (posiblePositionList.Count != 0)
+        {
+            Move((Vector3Int)posiblePositionList.GetByIndex(0));
+        }
         skillRelease.SkillHandle(skillSet.skills[3], heroPoint);
     }
 

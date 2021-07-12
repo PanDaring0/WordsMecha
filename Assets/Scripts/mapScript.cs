@@ -28,6 +28,7 @@ public class MapScript : MonoBehaviour
         initMapCells();
         initGameObject();
         turnManager.GetComponent<TurnManager>().initTurnManager();
+        enemyAi.GetComponent<EnemyAi>().initEnemyAi();
     }
 
     // Update is called once per frame
