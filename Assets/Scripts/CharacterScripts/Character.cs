@@ -15,8 +15,10 @@ public class Character : MonoBehaviour
     public MapScript mapScript;
     public GameObject map;
     public bool isTransformMoving = false;
-    public float speed = 0.5f;
+    public float speed;
     public Vector3 transShouldBe;
+    public List<Vector3Int> pathList = new List<Vector3Int>();
+    public Animator animator;
 
     public bool movable;//是否结束行动
 
@@ -24,10 +26,16 @@ public class Character : MonoBehaviour
     {
         mapScript = map.GetComponent<MapScript>();
         position = mapScript.getCellPosition(transform.position);
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if(pathList.Count != 0 && isTransformMoving == false)
+        {
+            MoveSingle(pathList[0]);
+            pathList.RemoveAt(0);
+        }
         TransFormUpdate();
     }
 
@@ -35,34 +43,52 @@ public class Character : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, transShouldBe) > 0.1f)
         {
-            transform.position = transform.position + speed * (transShouldBe - transform.position) * Time.deltaTime;
+            transform.position = transform.position + speed * Vector3.Normalize(transShouldBe - transform.position) * Time.deltaTime;
         }
         else
         {
             transform.position = transShouldBe;
             isTransformMoving = false;
+            animator.SetBool("isWalking", false);
         }
+    }
+    
+    public bool MoveSingle(Vector3Int pos)
+    {
+        mapScript.gameObjectGroup[position.x, position.y] = null;
+        mapScript.gameObjectGroup[pos.x, pos.y] = this.gameObject;
+        if (string.Equals(this.tag, "Hero"))
+        {
+            mapScript.heroPoint = pos;
+        }
+        isTransformMoving = true;
+        animator.SetBool("isWalking", true);
+        if ((pos-position).x == 1)
+        {
+            animator.Play("HeroWalk_R");
+        }
+        else if((pos-position).x == -1)
+        {
+            animator.Play("HeroWalk_L");
+        }
+        else if ((pos - position).y == 1)
+        {
+            animator.Play("HeroWalk_U");
+        }
+        else if ((pos - position).y == -1)
+        {
+            animator.Play("HeroWalk_D");
+        }
+        position = pos;
+        transShouldBe = mapScript.getCellCenter(position);
+
+
+        return true;
     }
 
     public bool Move(Vector3Int pos)
     {
-        if(mapScript.gameObjectGroup[pos.x,pos.y] != null)
-        {
-            return false;
-        }
-        if(mapScript.mapCellTypes[pos.x,pos.y] == MapCellType.obstacle)
-        {
-            return false;
-        }
-        mapScript.gameObjectGroup[position.x, position.y] = null;
-        mapScript.gameObjectGroup[pos.x, pos.y] = this.gameObject;
-        if (string.Equals(this.tag,"Hero"))
-        {
-            mapScript.heroPoint = pos;
-        }
-        position = pos;
-        isTransformMoving = true;
-        transShouldBe = mapScript.getCellCenter(position);
+        pathList = mapScript.findPath(position, pos);
 
         return true;
     }

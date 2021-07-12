@@ -4007,6 +4007,11 @@ MonoBehaviour:
   release: {fileID: 0}
   mapScript: {fileID: 0}
   map: {fileID: 517535630}
+  isTransformMoving: 0
+  speed: 2
+  transShouldBe: {x: 0, y: 0, z: 0}
+  pathList: []
+  animator: {fileID: 0}
   movable: 0
   heroName: 
   activeSkills: 01000000020000000300000004000000
@@ -4055,6 +4060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   user: {fileID: 0}
   map: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!95 &2015960881
 Animator:
   serializedVersion: 3
