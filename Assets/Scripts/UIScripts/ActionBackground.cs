@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ActionBackground : MonoBehaviour
 {
     public GameObject pre_Action;//指令单元的预制体
+    public List<GameObject> actionList = new List<GameObject>();
     public int actionNum = 0;
     
     
@@ -17,30 +18,24 @@ public class ActionBackground : MonoBehaviour
     {
         GameObject pre = GameObject.Instantiate(pre_Action);
         pre.transform.SetParent(transform);
-        Debug.Log(pre.transform.name);
         
         pre.transform.position = new Vector3(-259f,120-40*actionNum,0) + transform.position;
-        pre.GetComponent<ActionButton>().actionNum.text = action.actionNum.ToString();
+        pre.GetComponent<ActionButton>().actionNum.text = (action.actionNum+1).ToString();
 
         if(action.actionType == 0)
             pre.GetComponent<ActionButton>().name.text = "移动";
         else if(action.actionType == 1)
             pre.GetComponent<ActionButton>().name.text = set.skills[action.skillNum].skillName;
 
+        actionList.Add(pre);
         actionNum++;
     }
 
     //删去已完成的行动
-    public void FinishAction(int actionNum,SkillSet set)
+    public void FinishAction()
     {
-        GameObject[] prefabs = GetComponentsInChildren<GameObject>();
-        foreach (GameObject prefab in prefabs)
-        {
-            if(prefab.GetComponent<Text>().text == actionNum.ToString())
-            {
-                Destroy(prefab);
-            }
-        }
+        Destroy(actionList[0]);
+        actionList.RemoveAt(0);
     }
 
 

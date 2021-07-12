@@ -25,9 +25,10 @@ public class InputController : MonoBehaviour
     public List<Action> actions;//指令序列
     public Action newAction;
 
-    private int formalAction;//将读取的指令
+    private int formalAction = 0;//将读取的指令
 
     public ActionBackground background;
+    public SkillButtonManager manager;
     
     void Start()
     {
@@ -45,6 +46,7 @@ public class InputController : MonoBehaviour
         set = new SkillSet(gameObject.name);
         AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
+        manager.CreatePreButton(set);
         Test();
     }
 
@@ -65,6 +67,7 @@ public class InputController : MonoBehaviour
             action = new Action();
             action.pos = actions[i].target;
         }
+        mode = 3;
     }
 
     void Update()
@@ -140,6 +143,7 @@ public class InputController : MonoBehaviour
                         player.bufflist.Add(defendBuff);
                         energyRemained = 0;
                         mode = 3;
+                        manager.gameObject.SetActive(false);
                         return;
                     }
                     mode = 0;
@@ -251,15 +255,19 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void UpdateActionRelease()
     {
-        if(player.isAnimatorMoving)//如果正在动画状态
+        if(player.isMoveReleasing)//如果正在动画状态
         {
             return;
         }
         else    //可以移动
         {
-            if(actions.Count < formalAction)
+            if(formalAction > 0)
+                background.FinishAction();
+
+            if(actions.Count < formalAction)/////////////
             {
                 actions = new List<Action>();
+                Debug.Log("oop");
                 mode = 0;
                 s_skill = 0;
                 player.movable = false;
@@ -275,8 +283,10 @@ public class InputController : MonoBehaviour
                 {
                     release.SkillHandle(set.skills[action.skillNum],action.target);
                 }
+                
+                //AssetBuilder.SaveToAsset(set,player.heroName);
+                formalAction++;
 
-                AssetBuilder.SaveToAsset(set,player.heroName);
             }
         }
     }
