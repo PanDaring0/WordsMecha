@@ -4002,8 +4002,15 @@ MonoBehaviour:
   mapScript: {fileID: 0}
   map: {fileID: 517535630}
   isTransformMoving: 0
+<<<<<<< HEAD
   speed: 0.5
   transShouldBe: {x: 0, y: 0, z: 0}
+=======
+  speed: 2
+  transShouldBe: {x: 0, y: 0, z: 0}
+  pathList: []
+  animator: {fileID: 0}
+>>>>>>> 5c43200cfbfe7f8b545ec87d66c1dffd47f1347b
   movable: 0
   heroName: 
   activeSkills: 01000000020000000300000004000000

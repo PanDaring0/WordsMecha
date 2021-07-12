@@ -14,6 +14,12 @@ public class Enemy : Character
         skillRelease.SkillHandle(skillSet.skills[3], mapScript.heroPoint);
     }
 
+    public void TakeActions()
+    {
+        Escape();
+        movable = false;
+    }
+
     public void Escape()
     {
         posiblePositionList.Clear();
@@ -35,6 +41,10 @@ public class Enemy : Character
                     }
                 }
             }
+        }
+        if (posiblePositionList.Count != 0)
+        {
+            Move((Vector3Int)posiblePositionList.GetByIndex(0));
         }
         skillRelease.SkillHandle(skillSet.skills[3], heroPoint);
     }
