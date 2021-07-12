@@ -6,35 +6,36 @@ using UnityEngine.UI;
 public class ActionBackground : MonoBehaviour
 {
     public GameObject pre_Action;//指令单元的预制体
+    public List<GameObject> actionList = new List<GameObject>();
     public int actionNum = 0;
     
     
     void Start()
     {
-        
     }
 
     public void ShowAction(Action action,SkillSet set)
     {
         GameObject pre = GameObject.Instantiate(pre_Action);
-        pre.transform.parent = this.transform;
+        pre.transform.SetParent(transform);
         
-        foreach (Transform child in pre.transform)
-        {
-            Debug.Log(child.name);
-            child.transform.position = new Vector3(-259.39f,120-50*actionNum,0);
-            if(child.name == "actionNum")
-                child.GetComponent<Text>().text = action.actionNum.ToString();
-            else if(child.name == "Name")
-            {
-                if(action.actionType == 0)
-                    child.GetComponent<Text>().text = "移动";
-                else
-                    child.GetComponent<Text>().text = set.skills[action.skillNum].skillName;
-            }
-        }
+        pre.transform.position = new Vector3(-259f,120-40*actionNum,0) + transform.position;
+        pre.GetComponent<ActionButton>().actionNum.text = (action.actionNum+1).ToString();
 
+        if(action.actionType == 0)
+            pre.GetComponent<ActionButton>().name.text = "移动";
+        else if(action.actionType == 1)
+            pre.GetComponent<ActionButton>().name.text = set.skills[action.skillNum].skillName;
+
+        actionList.Add(pre);
         actionNum++;
+    }
+
+    //删去已完成的行动
+    public void FinishAction()
+    {
+        Destroy(actionList[0]);
+        actionList.RemoveAt(0);
     }
 
 

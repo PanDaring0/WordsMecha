@@ -28,7 +28,7 @@ public class AssetBuilder : MonoBehaviour
         //写入xlsx文件，注意excel文件的后缀必须为.xlsx，若为.xls则无法读取到Workbook.Worksheets
         public void WriteToExcel(SkillSet set,string name)
         {
-            SaveToAsset(set,name);
+            //SaveToAsset(set,name);
     
             string path = SkillSet.excelsFolderPath + set.excelName + ".xlsm";
             FileInfo xlsxFile = new FileInfo(path);
@@ -50,7 +50,7 @@ public class AssetBuilder : MonoBehaviour
                         }
                     }
                     package.Save();
-                    Debug.Log("WriteToExcel Success");
+                    //Debug.Log("WriteToExcel Success");
                 }
             }
         }
@@ -60,14 +60,13 @@ public class AssetBuilder : MonoBehaviour
         public static void SaveToAsset(SkillSet skillSet,string name)
         {
             SkillSet set = Resources.Load<SkillSet>("DataAssets/"+name);
-            Debug.Log(set.skills[0].skillName);
             for(int i = 0;i < set.totalNum;i++)
             {
                 set.skills[i] = skillSet.skills[i];
             }
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("SaveToAsset Success");
+            //Debug.Log("SaveToAsset Success");
         }
 
         /*public static Skill GetNewSkill()
