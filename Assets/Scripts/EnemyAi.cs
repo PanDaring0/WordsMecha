@@ -26,7 +26,7 @@ public class EnemyAi : MonoBehaviour
         gameObjectList = mapScript.gameObjectList;
         foreach(GameObject obj in gameObjectList)
         {
-            if(obj.GetComponent<Character>().isAnimatorMoving == true)
+            if(obj.GetComponent<Character>().isMoveReleasing == true)
             {
                 return;
             }

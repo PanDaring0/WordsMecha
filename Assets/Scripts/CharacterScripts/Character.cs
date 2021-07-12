@@ -15,6 +15,7 @@ public class Character : MonoBehaviour
     public MapScript mapScript;
     public GameObject map;
     public bool isAnimatorMoving = false;
+    public bool isMoveReleasing;
     public float speed;
     public Vector3 transShouldBe;
     public List<Vector3Int> pathList = new List<Vector3Int>();
@@ -48,10 +49,11 @@ public class Character : MonoBehaviour
         else
         {
             transform.position = transShouldBe;
+            isAnimatorMoving = false;
+            animator.SetBool("isWalking", false);
             if (pathList.Count == 0)
             {
-                isAnimatorMoving = false;
-                animator.SetBool("isWalking", false);
+                isMoveReleasing = false;
             }
         }
     }
@@ -66,6 +68,7 @@ public class Character : MonoBehaviour
         }
         isAnimatorMoving = true;
         animator.SetBool("isWalking", true);
+        isMoveReleasing = true;
         if ((pos-position).x == 1)
         {
             animator.Play("HeroWalk_R");
