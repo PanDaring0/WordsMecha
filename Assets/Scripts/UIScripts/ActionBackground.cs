@@ -11,30 +11,35 @@ public class ActionBackground : MonoBehaviour
     
     void Start()
     {
-        
     }
 
     public void ShowAction(Action action,SkillSet set)
     {
         GameObject pre = GameObject.Instantiate(pre_Action);
-        pre.transform.parent = this.transform;
+        pre.transform.SetParent(transform);
         
-        foreach (Transform child in pre.transform)
-        {
-            Debug.Log(child.name);
-            child.transform.position = new Vector3(-259.39f,120-50*actionNum,0);
-            if(child.name == "actionNum")
-                child.GetComponent<Text>().text = action.actionNum.ToString();
-            else if(child.name == "Name")
-            {
-                if(action.actionType == 0)
-                    child.GetComponent<Text>().text = "移动";
-                else
-                    child.GetComponent<Text>().text = set.skills[action.skillNum].skillName;
-            }
-        }
+        pre.transform.position = new Vector3(-259f,120-40*actionNum,0) + transform.position;
+        pre.GetComponent<ActionButton>().actionNum.text = action.actionNum.ToString();
+
+        if(action.actionType == 0)
+            pre.GetComponent<ActionButton>().name.text = "移动";
+        else if(action.actionType == 1)
+            pre.GetComponent<ActionButton>().name.text = set.skills[action.skillNum].skillName;
 
         actionNum++;
+    }
+
+    //删去已完成的行动
+    public void FinishAction(int actionNum,SkillSet set)
+    {
+        GameObject[] prefabs = GetComponentsInChildren<GameObject>();
+        foreach (GameObject prefab in prefabs)
+        {
+            if(prefab.GetComponent<Text>().text == actionNum.ToString())
+            {
+                Destroy(prefab);
+            }
+        }
     }
 
 

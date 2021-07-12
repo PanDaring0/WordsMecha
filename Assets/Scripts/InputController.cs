@@ -25,6 +25,8 @@ public class InputController : MonoBehaviour
     public List<Action> actions;//指令序列
     public Action newAction;
 
+    private int formalAction;//将读取的指令
+
     public ActionBackground background;
     
     void Start()
@@ -59,22 +61,25 @@ public class InputController : MonoBehaviour
             action.target = action.pos + new Vector3Int(1,1,0);
 
             actions.Add(action);
+            background.ShowAction(action,set);
             action = new Action();
             action.pos = actions[i].target;
         }
-        //移动的处理
-        ActionRelease();
     }
 
     void Update()
     {
         MouseFlow();
         RayCheck();
+        SkillSelect();
         if(player.movable)
         {
             MouseClick();
         }
-        End();
+        if(mode == 3)
+        {
+            UpdateActionRelease();
+        }
     }
 
     //鼠标坐标获取
@@ -120,21 +125,25 @@ public class InputController : MonoBehaviour
                         s_skill = 0;
                         energyRemained -= set.skills[newAction.skillNum].skillCost;
                         set.skills[newAction.skillNum].skillRemained--;
+                        background.ShowAction(newAction,set);
                     }
                     else if(newAction.actionType == 0)//如果是移动
                     {
                         //下一个初始点变为本次的目标点
                         position = newAction.target;
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
+                        background.ShowAction(newAction,set);
                     }
                     else//结束回合
                     {
-                        player.def += energyRemained;
+                        Buff defendBuff = new Buff(2,1,energyRemained);
+                        player.bufflist.Add(defendBuff);
                         energyRemained = 0;
                         mode = 3;
+                        return;
                     }
                     mode = 0;
-                    newAction.actionNum++;//读取下一条指令
+                    newAction.actionNum++;//写入下一条指令
 
                 }
                 else
@@ -162,7 +171,7 @@ public class InputController : MonoBehaviour
     }
 
     //选定技能
-    public void SelectSkill()
+    public void SkillSelect()
     {
         if(s_skill!=0)
         {
@@ -182,10 +191,9 @@ public class InputController : MonoBehaviour
                 Debug.Log("未解锁此技能！");
                 return;
             }
-        
-        //选定的动画效果
 
         SkillRangeHandle();
+        release.map.setSkillReleaseRangeHighLight(range);
         newAction.actionType = 1;
         newAction.skillNum = s_skill;
         newAction.pos = position;
@@ -241,29 +249,36 @@ public class InputController : MonoBehaviour
     }
 
     //读取列表，施放技能
-    public void ActionRelease()
+    public void UpdateActionRelease()
     {
-        foreach (Action action in actions)
+        if(player.isTransformMoving)//如果正在动画状态
         {
-            if(action.actionType == 0)//移动
+            return;
+        }
+        else    //可以移动
+        {
+            if(actions.Count < formalAction)
             {
-                release.Move(action.target);
+                actions = new List<Action>();
+                mode = 0;
+                s_skill = 0;
+                player.movable = false;
             }
-            else if(action.actionType == 1)
+            else
             {
-                release.SkillHandle(set.skills[action.skillNum],action.target);
+                Action action = actions[formalAction];
+                if(action.actionType == 0)//移动
+                {
+                    release.Move(action.target);
+                }
+                else if(action.actionType == 1)
+                {
+                    release.SkillHandle(set.skills[action.skillNum],action.target);
+                }
+
+                AssetBuilder.SaveToAsset(set,player.heroName);
             }
         }
-        AssetBuilder.SaveToAsset(set,player.heroName);
-        player.movable = false;
-    }
-
-    public void End()
-    {
-        if(mode == 3)
-        {
-            ActionRelease();  
-        }  
     }
 
     public void RayCheck()
