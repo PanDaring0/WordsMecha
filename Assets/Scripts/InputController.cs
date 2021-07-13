@@ -52,7 +52,7 @@ public class InputController : MonoBehaviour
         AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
         manager.CreatePreButton(set);
-        Test();
+        //Test();
 
         energyRemained = 10;
         //Debug.Log(energyRemained);
@@ -314,7 +314,7 @@ public class InputController : MonoBehaviour
                     release.SkillHandle(set.skills[action.skillNum],action.target);
                 }
                 
-                AssetBuilder.SaveToAsset(set,player.heroName);
+                //AssetBuilder.SaveToAsset(set,player.heroName);
                 formalAction++;
                 //Debug.Log(formalAction);
 
