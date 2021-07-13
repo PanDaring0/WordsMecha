@@ -315,7 +315,7 @@ public class InputController : MonoBehaviour
                 {
                     release.SkillHandle(set.skills[actions[formalAction].skillNum],actions[formalAction].target);
                 }
-                
+                Debug.Log(actions[formalAction].target);
                 //AssetBuilder.SaveToAsset(set,player.heroName);
                 formalAction++;
 
