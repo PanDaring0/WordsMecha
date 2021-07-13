@@ -46,12 +46,13 @@ public class InputController : MonoBehaviour
         release.ReleaseStart();
         position = player.position;
         Debug.Log(position);
+        release.map.setSkillReleaseRangeHighLight(range);
 
         set = new SkillSet(gameObject.name);
         AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
         manager.CreatePreButton(set);
-        //Test();
+        Test();
 
         energyRemained = 10;
         //Debug.Log(energyRemained);
@@ -79,7 +80,6 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(mode);
         MouseFlow();
         RayCheck();
         SkillSelect();
@@ -292,7 +292,9 @@ public class InputController : MonoBehaviour
             if(formalAction > 0)
                 background.FinishAction();
 
-            if(actions.Count < formalAction)/////////////
+            Debug.Log(actions.Count);
+            Debug.Log(formalAction);
+            if(actions.Count <= formalAction)
             {
                 actions = new List<Action>();
                 Debug.Log("oop");
@@ -314,7 +316,7 @@ public class InputController : MonoBehaviour
                 
                 AssetBuilder.SaveToAsset(set,player.heroName);
                 formalAction++;
-                Debug.Log(formalAction);
+                //Debug.Log(formalAction);
 
             }
         }
