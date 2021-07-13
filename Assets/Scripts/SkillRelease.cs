@@ -71,7 +71,7 @@ public class SkillRelease : MonoBehaviour
             {
                 target.y = j;
                 if(MapScript.disBetweenPosition(target,user.position)<=distance)
-                    damageList.Add(target);
+                    damageList.Add(target+centerpoint);
             }
         }
         return damageList;
@@ -99,6 +99,7 @@ public class SkillRelease : MonoBehaviour
     public void DamageEnemy(GameObject enemy,int damage)
     {
         enemy.GetComponent<Character>().health -= damage;
+        Debug.Log(enemy.GetComponent<Character>().health);
 
     }
 
@@ -106,6 +107,7 @@ public class SkillRelease : MonoBehaviour
     public int Damage(Skill skill,int atk,int def)
     {
         int damage = skill.skillDamage;
+        Debug.Log(damage);
         if(atk<=def)
             return damage*atk/(atk+def);
         else

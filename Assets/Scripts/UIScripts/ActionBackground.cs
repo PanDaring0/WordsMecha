@@ -36,6 +36,7 @@ public class ActionBackground : MonoBehaviour
     {
         Destroy(actionList[0]);
         actionList.RemoveAt(0);
+        actionNum = 0;
     }
 
 

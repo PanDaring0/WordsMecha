@@ -73,21 +73,43 @@ public class Character : MonoBehaviour
         isAnimatorMoving = true;
         animator.SetBool("isWalking", true);
         isMoveReleasing = true;
-        if ((pos-position).x == 1)
+        if (string.Equals(tag, "Hero"))
         {
-            animator.Play("HeroWalk_R");
+            if ((pos - position).x == 1)
+            {
+                animator.Play("HeroWalk_R");
+            }
+            else if ((pos - position).x == -1)
+            {
+                animator.Play("HeroWalk_L");
+            }
+            else if ((pos - position).y == 1)
+            {
+                animator.Play("HeroWalk_U");
+            }
+            else if ((pos - position).y == -1)
+            {
+                animator.Play("HeroWalk_D");
+            }
         }
-        else if((pos-position).x == -1)
+        else if (string.Equals(tag, "Enemy"))
         {
-            animator.Play("HeroWalk_L");
-        }
-        else if ((pos - position).y == 1)
-        {
-            animator.Play("HeroWalk_U");
-        }
-        else if ((pos - position).y == -1)
-        {
-            animator.Play("HeroWalk_D");
+            if ((pos - position).x == 1)
+            {
+                animator.Play("EnemyWalk_R");
+            }
+            else if ((pos - position).x == -1)
+            {
+                animator.Play("EnemyWalk_L");
+            }
+            else if ((pos - position).y == 1)
+            {
+                animator.Play("EnemyWalk_U");
+            }
+            else if ((pos - position).y == -1)
+            {
+                animator.Play("EnemyWalk_D");
+            }
         }
         position = pos;
         transShouldBe = mapScript.getCellCenter(position);

@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 1491391}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4452,7 +4452,6 @@ MonoBehaviour:
     skillBuffImpact: 0
     unlocked: 0
   minCost: 0
-  energyRemained: 10
   moveCost: 1
   background: {fileID: 1566139693}
   manager: {fileID: 1106894829}

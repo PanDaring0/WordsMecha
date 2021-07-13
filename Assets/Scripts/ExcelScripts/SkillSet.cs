@@ -34,9 +34,9 @@ public class SkillSet : ScriptableObject
             name = collect[i][1].ToString();
             type = int.Parse(collect[i][2].ToString());
             cost = int.Parse(collect[i][3].ToString());
-            range = int.Parse(collect[i][4].ToString());
-            maxnum = int.Parse(collect[i][5].ToString());
-            remained = int.Parse(collect[i][6].ToString());
+            range = int.Parse(collect[i][6].ToString());
+            maxnum = int.Parse(collect[i][4].ToString());
+            remained = int.Parse(collect[i][5].ToString());
             damage = int.Parse(collect[i][7].ToString());
             damageRange = int.Parse(collect[i][8].ToString());
             movecount = int.Parse(collect[i][9].ToString());

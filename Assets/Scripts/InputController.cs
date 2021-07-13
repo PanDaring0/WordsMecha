@@ -163,9 +163,9 @@ public class InputController : MonoBehaviour
                         mode = 3;
                         manager.gameObject.SetActive(false);//隐藏选技能界面
                         newAction.actionType = 2;
-                        newAction.skillNum = energyRemained;
                         energyRemained = 0;
                         actions.Add(newAction);
+                        newAction = new Action();
                         return;
                     }
                     mode = 0;
@@ -197,6 +197,8 @@ public class InputController : MonoBehaviour
             s_skill = 0;
             mode = 0;
             selectedGrid = new Vector3Int();
+            range = new List<Vector3Int>();
+            release.map.setSkillReleaseRangeHighLight(range);
         }
     }
 
@@ -251,9 +253,11 @@ public class InputController : MonoBehaviour
     {
         bool inRange = false;
         Vector3Int select = release.map.getCellPosition(mouseWorldPosition);
+        Debug.Log(select);
         foreach (Vector3Int grid in range)
         {
-            if(grid == select)
+            Debug.Log(grid);
+            if(grid + player.position == select)
                 inRange = true;
         }
         if(inRange)
@@ -274,8 +278,6 @@ public class InputController : MonoBehaviour
     //确认选中的格子
     public bool GridConfirm()
     {
-        Debug.Log(selectedGrid);
-        Debug.Log(release.map.getCellPosition(mouseWorldPosition));
         if(selectedGrid == release.map.getCellPosition(mouseWorldPosition))
             return true;
         else

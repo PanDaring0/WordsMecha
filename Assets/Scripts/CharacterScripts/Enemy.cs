@@ -9,11 +9,6 @@ public class Enemy : Character
     public SortedList posiblePositionList = new SortedList(new MyComparer());
     public Vector3Int heroPoint;
 
-    public void addPositionToList()
-    {
-        skillRelease.SkillHandle(skillSet.skills[3], mapScript.heroPoint);
-    }
-
     public void TakeActions()
     {
         Escape();
@@ -35,6 +30,7 @@ public class Enemy : Character
                 v[3] = new Vector3Int(heroPoint.x - i, heroPoint.y - 3 + i, 0);
                 for (int j = 0; j < 4; j++)
                 {
+                    Debug.Log(v[j]);
                     if (mapScript.isPositionInMap(v[j]) && mapScript.gameObjectGroup[v[j].x, v[j].y] == null)
                     {
                         posiblePositionList.Add(MapScript.disBetweenPosition(v[j], position), v[j]);
@@ -53,40 +49,6 @@ public class Enemy : Character
     public void Chase()
     {
         
-    }
-
-    public new bool MoveSingle(Vector3Int pos)
-    {
-        mapScript.gameObjectGroup[position.x, position.y] = null;
-        mapScript.gameObjectGroup[pos.x, pos.y] = this.gameObject;
-        if (string.Equals(this.tag, "Hero"))
-        {
-            mapScript.heroPoint = pos;
-        }
-        isAnimatorMoving = true;
-        animator.SetBool("isWalking", true);
-        isMoveReleasing = true;
-        if ((pos - position).x == 1)
-        {
-            animator.Play("EnemyWalk_R");
-        }
-        else if ((pos - position).x == -1)
-        {
-            animator.Play("EnemyWalk_L");
-        }
-        else if ((pos - position).y == 1)
-        {
-            animator.Play("EnemyWalk_U");
-        }
-        else if ((pos - position).y == -1)
-        {
-            animator.Play("EnemyWalk_D");
-        }
-        position = pos;
-        transShouldBe = mapScript.getCellCenter(position);
-
-
-        return true;
     }
 
     public void Start()
