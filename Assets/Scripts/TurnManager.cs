@@ -86,6 +86,7 @@ public class TurnManager : MonoBehaviour
                 if (string.Equals(gobj.tag, "Hero"))
                 {
                     gobj.GetComponent<Character>().movable = true;
+                    InputController.TurnBegin();
                 }
             }
             return;
