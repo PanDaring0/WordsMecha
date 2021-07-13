@@ -45,7 +45,6 @@ public class InputController : MonoBehaviour
 
         release.ReleaseStart();
         position = player.position;
-        Debug.Log(position);
         release.map.setSkillReleaseRangeHighLight(range);
 
         set = new SkillSet(gameObject.name);
@@ -157,6 +156,7 @@ public class InputController : MonoBehaviour
                         //player.transform.position = newAction.target;
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                         background.ShowAction(newAction,set);
+                        Debug.Log(energyRemained);
                     }
                     else//结束回合
                     {
@@ -205,6 +205,7 @@ public class InputController : MonoBehaviour
     public void SelectMoveGrid()
     {
         selectedGrid = release.map.getCellPosition(mouseWorldPosition);
+        newAction.pos = position;
         newAction.target = selectedGrid;
         positionText.text = "(" + selectedGrid.x.ToString() + "," + selectedGrid.y.ToString() + ")";
     }
@@ -299,7 +300,7 @@ public class InputController : MonoBehaviour
             if(actions.Count <= formalAction)
             {
                 actions = new List<Action>();
-                Debug.Log("oop");
+                Debug.Log("TurnFinished");
                 mode = 0;
                 s_skill = 0;
                 formalAction = 0;
