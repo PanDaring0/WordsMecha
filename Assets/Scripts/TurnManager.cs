@@ -76,6 +76,7 @@ public class TurnManager : MonoBehaviour
                     gobj.GetComponent<Character>().movable = true;
                 }
             }
+            return;
         }
         if (turnStatus == TurnStatus.enemyTurn)
         {
@@ -87,6 +88,7 @@ public class TurnManager : MonoBehaviour
                     gobj.GetComponent<Character>().movable = true;
                 }
             }
+            return;
         }
     }
 }
