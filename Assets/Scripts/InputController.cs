@@ -22,7 +22,7 @@ public class InputController : MonoBehaviour
     private Vector3Int selectedGrid;
     private Vector3Int position;
     private List<Vector3Int> range = new List<Vector3Int>();
-    public int energyRemained;//本回合剩余的能量
+    public static int energyRemained;//本回合剩余的能量
     public int moveCost = 1;//移动所需能量
     public List<Action> actions;//指令序列
     public Action newAction;
@@ -130,6 +130,8 @@ public class InputController : MonoBehaviour
             {
                 SelectSkillGrid();   
                 //输出范围，在范围内选择
+                newAction.actionType = 1;
+                mode = 2;
             }
             else if(mode == 2)
             {
@@ -211,18 +213,19 @@ public class InputController : MonoBehaviour
         if(s_skill!=0&&!skillSetted)
         {
             skillSetted = true;
+            skillSelected = set.skills[s_skill];
             //判断技能是否可用
-            if(set.skills[s_skill].skillRemained < 0)
+            if(skillSelected.skillRemained < 0)
             {
                 Debug.Log("技能剩余量不足！");
                 return;
             }
-            if(set.skills[s_skill].skillCost > energyRemained)
+            if(skillSelected.skillCost > energyRemained)
             {
                 Debug.Log("剩余能量不足！");
                 return;
             }
-            if(set.skills[s_skill].unlocked == 0)
+            if(skillSelected.unlocked == 0)
             {
                 Debug.Log("未解锁此技能！");
                 return;
@@ -271,6 +274,8 @@ public class InputController : MonoBehaviour
     //确认选中的格子
     public bool GridConfirm()
     {
+        Debug.Log(selectedGrid);
+        Debug.Log(release.map.getCellPosition(mouseWorldPosition));
         if(selectedGrid == release.map.getCellPosition(mouseWorldPosition))
             return true;
         else
@@ -289,14 +294,13 @@ public class InputController : MonoBehaviour
             if(formalAction > 0)
                 background.FinishAction();
 
-            Debug.Log(actions.Count);
-            Debug.Log(formalAction);
             if(actions.Count <= formalAction)
             {
                 actions = new List<Action>();
                 Debug.Log("oop");
                 mode = 0;
                 s_skill = 0;
+                formalAction = 0;
                 player.movable = false;
             }
             else
@@ -335,5 +339,10 @@ public class InputController : MonoBehaviour
                 UIselect = false;
             }
         }
+    }
+
+    public static void TurnBegin()
+    {
+        energyRemained = 10;
     }
 }
