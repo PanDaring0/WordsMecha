@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     public GameObject map;
     public bool isAnimatorMoving = false;
     public bool isMoveReleasing = false;
+    public bool isSkillReleasing = false;
     public float speed;
     public Vector3 transShouldBe;
     public List<Vector3Int> pathList = new List<Vector3Int>();
