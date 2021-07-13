@@ -19,6 +19,7 @@ public class SkillRelease : MonoBehaviour
     //综合处理
     public void SkillHandle(Skill skill,Vector3Int target)
     {
+        user.isSkillReleasing = true;
         List<Vector3Int> damageRange = CheckRange(skill,target);
         List<GameObject> enemys = new List<GameObject>();
         //位移
@@ -36,6 +37,7 @@ public class SkillRelease : MonoBehaviour
         }
 
         Buff(skill,user);
+        user.isSkillReleasing = false;
     }
     
     //施放技能的最大范围
@@ -70,7 +72,7 @@ public class SkillRelease : MonoBehaviour
             for(int j = -distance;j<=distance;j++)
             {
                 target.y = j;
-                if(MapScript.disBetweenPosition(target,centerpoint)<=distance)
+                if(MapScript.disBetweenPosition(target,new Vector3Int(0,0,0))<=distance)
                     damageList.Add(target+centerpoint);
             }
         }

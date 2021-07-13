@@ -232,6 +232,7 @@ MonoBehaviour:
   map: {fileID: 517535630}
   isAnimatorMoving: 0
   isMoveReleasing: 0
+  isSkillReleasing: 0
   speed: 2
   transShouldBe: {x: 0, y: 0, z: 0}
   pathList: []
@@ -4416,6 +4417,7 @@ MonoBehaviour:
   map: {fileID: 517535630}
   isAnimatorMoving: 0
   isMoveReleasing: 0
+  isSkillReleasing: 0
   speed: 2
   transShouldBe: {x: 0, y: 0, z: 0}
   pathList: []

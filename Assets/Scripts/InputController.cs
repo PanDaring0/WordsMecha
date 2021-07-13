@@ -258,7 +258,6 @@ public class InputController : MonoBehaviour
     {
         bool inRange = false;
         Vector3Int select = release.map.getCellPosition(mouseWorldPosition);
-        Debug.Log(select);
         foreach (Vector3Int grid in range)
         {
             if(grid + player.position == select)
