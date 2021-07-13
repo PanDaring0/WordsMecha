@@ -30,7 +30,6 @@ public class Enemy : Character
                 v[3] = new Vector3Int(heroPoint.x - i, heroPoint.y - 3 + i, 0);
                 for (int j = 0; j < 4; j++)
                 {
-                    Debug.Log(v[j]);
                     if (mapScript.isPositionInMap(v[j]) && mapScript.gameObjectGroup[v[j].x, v[j].y] == null)
                     {
                         posiblePositionList.Add(MapScript.disBetweenPosition(v[j], position), v[j]);
