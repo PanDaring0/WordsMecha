@@ -96,7 +96,7 @@ public class InputController : MonoBehaviour
 
     public void TurnEndding()
     {
-        if(Input.GetKeyUp(KeyCode.KeypadEnter))
+        if(Input.GetKeyUp(KeyCode.Return))
         {
             mode = 3;
         }
