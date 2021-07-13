@@ -70,7 +70,7 @@ public class SkillRelease : MonoBehaviour
             for(int j = -distance;j<=distance;j++)
             {
                 target.y = j;
-                if(MapScript.disBetweenPosition(target,user.position)<=distance)
+                if(MapScript.disBetweenPosition(target,centerpoint)<=distance)
                     damageList.Add(target+centerpoint);
             }
         }

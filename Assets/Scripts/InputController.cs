@@ -39,6 +39,7 @@ public class InputController : MonoBehaviour
         release = GetComponent<SkillRelease>();
         actions = new List<Action>();
         player.heroName = gameObject.name;
+        formalAction = 0;
 
         selectedGrid = new Vector3Int();
         newAction = new Action();
@@ -166,6 +167,7 @@ public class InputController : MonoBehaviour
                         energyRemained = 0;
                         actions.Add(newAction);
                         newAction = new Action();
+                        newAction.actionNum = 0;
                         return;
                     }
                     mode = 0;
@@ -178,14 +180,16 @@ public class InputController : MonoBehaviour
                     {
                         mode = 0;
                         s_skill = 0;
+                        positionText.text = "未选中同一格";
                     }
                     
                     else//技能
                     {
-                        mode = 1;
+                        mode = 0;
                         Debug.Log("reselect");
                         s_skill = 0;
                         skillSetted = false;
+                        positionText.text = "未选中同一格";
                     }
                 }
             }
@@ -257,7 +261,6 @@ public class InputController : MonoBehaviour
         Debug.Log(select);
         foreach (Vector3Int grid in range)
         {
-            Debug.Log(grid);
             if(grid + player.position == select)
                 inRange = true;
         }
@@ -316,7 +319,6 @@ public class InputController : MonoBehaviour
                 {
                     release.SkillHandle(set.skills[actions[formalAction].skillNum],actions[formalAction].target);
                 }
-                Debug.Log(actions[formalAction].target);
                 //AssetBuilder.SaveToAsset(set,player.heroName);
                 formalAction++;
 
