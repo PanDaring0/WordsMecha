@@ -55,6 +55,40 @@ public class Enemy : Character
         
     }
 
+    public new bool MoveSingle(Vector3Int pos)
+    {
+        mapScript.gameObjectGroup[position.x, position.y] = null;
+        mapScript.gameObjectGroup[pos.x, pos.y] = this.gameObject;
+        if (string.Equals(this.tag, "Hero"))
+        {
+            mapScript.heroPoint = pos;
+        }
+        isAnimatorMoving = true;
+        animator.SetBool("isWalking", true);
+        isMoveReleasing = true;
+        if ((pos - position).x == 1)
+        {
+            animator.Play("EnemyWalk_R");
+        }
+        else if ((pos - position).x == -1)
+        {
+            animator.Play("EnemyWalk_L");
+        }
+        else if ((pos - position).y == 1)
+        {
+            animator.Play("EnemyWalk_U");
+        }
+        else if ((pos - position).y == -1)
+        {
+            animator.Play("EnemyWalk_D");
+        }
+        position = pos;
+        transShouldBe = mapScript.getCellCenter(position);
+
+
+        return true;
+    }
+
     public void Start()
     {
         mapScript = map.GetComponent<MapScript>();

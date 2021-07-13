@@ -31,7 +31,6 @@ public class Character : MonoBehaviour
         position = mapScript.getCellPosition(transform.position);
         animator = GetComponent<Animator>();
         transShouldBe = transform.position;
-        bloodBar.value = (float)1.0 * health / 100;
     }
 
     private void Update()
@@ -42,6 +41,7 @@ public class Character : MonoBehaviour
             pathList.RemoveAt(0);
         }
         TransFormUpdate();
+        bloodBar.value = (float)1.0 * health / 100;
     }
 
     public void TransFormUpdate()
