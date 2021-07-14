@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SceneManager
+public static class SceneManaging
 {
     //控制场景转换、保存数据
     public static Scene scenes;

@@ -11,8 +11,10 @@ public class SelectionButton : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(Select);
 
         selection = new Selection();
-        selection.content = "l";
-        selection.correctness = true;
+    }
+
+    void Update()
+    {
         gameObject.GetComponentInChildren<Text>().text = selection.content;
     }
 

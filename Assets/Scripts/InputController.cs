@@ -31,6 +31,7 @@ public class InputController : MonoBehaviour
 
     public ActionBackground background;
     public SkillButtonManager manager;
+    public RetellWords retell;
     public Text positionText;
     
     void Start()
@@ -40,6 +41,7 @@ public class InputController : MonoBehaviour
         actions = new List<Action>();
         player.heroName = gameObject.name;
         formalAction = 0;
+        //retell.gameObject.SetActive(false);
 
         selectedGrid = new Vector3Int();
         newAction = new Action();
@@ -52,30 +54,8 @@ public class InputController : MonoBehaviour
         AssetBuilder.CreateSkillAsset(set);//从excel读取人物的技能表
         minCost = set.MinCost(player);
         manager.CreatePreButton(set);
-        //Test();
 
         energyRemained = 10;
-        //Debug.Log(energyRemained);
-    }
-
-    //测试方法
-    public void Test()
-    {
-        Action action = new Action();
-        action.pos = player.position;
-        for(int i = 0;i<4;i++)
-        {
-            action.actionNum = i;
-            action.actionType = 0;
-            action.skillNum = 0;
-            action.target = action.pos + new Vector3Int(1,1,0);
-
-            actions.Add(action);
-            background.ShowAction(action,set);
-            action = new Action();
-            action.pos = actions[i].target;
-        }
-        mode = 3;
     }
 
     void Update()
@@ -153,12 +133,18 @@ public class InputController : MonoBehaviour
                     }
                     else if(newAction.actionType == 0)//如果是移动
                     {
+                        if(energyRemained - MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost < 0)
+                        {
+                            Debug.Log("剩余能量不足！");
+                            return;
+                        }
                         //下一个初始点变为本次的目标点
                         position = newAction.target;
                         //player.transform.position = newAction.target;
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                         background.ShowAction(newAction,set);
                         actions.Add(newAction);
+                        release.Move(newAction.target);
                         newAction = new Action();
                         Debug.Log(energyRemained);
                     }
@@ -171,6 +157,7 @@ public class InputController : MonoBehaviour
                         actions.Add(newAction);
                         newAction = new Action();
                         newAction.actionNum = 0;
+                        release.Move(actions[0].pos);
                         return;
                     }
                     mode = 0;
@@ -243,6 +230,7 @@ public class InputController : MonoBehaviour
 
         SkillRangeHandle();
         release.map.setSkillReleaseRangeHighLight(range);
+        release.map.setDamageHighLight(release.CheckRange(skillSelected,Vector3Int.zero));
         newAction.actionType = 1;
         newAction.skillNum = s_skill;
         newAction.pos = position;
@@ -293,7 +281,7 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void UpdateActionRelease()
     {
-        if(player.isMoveReleasing||player.isSkillReleasing)//如果正在移动、攻击状态
+        if (player.isMoveReleasing||player.isSkillReleasing)//如果正在移动、攻击状态
         {
             return;
         }
@@ -303,6 +291,7 @@ public class InputController : MonoBehaviour
             {    
                 background.FinishAction();
                 background.actionNum = 0;
+                retell.gameObject.SetActive(false);
             }
 
             if(actions.Count <= formalAction)

@@ -1,25 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RetellWords : MonoBehaviour
 {
     public SelectionButton[] selections;
-    public static Word formalWord;//当前单词
-    public static int continuous = 0;
+    public Text remainText;
+    public static Word formalWord = new Word();//当前单词
+    public static int continuous = 0;//正确连击数
+    public static WordRead read;
 
-    public void GetButton()
+
+    void Start()
     {
+        read = new WordRead();
+        read.ReadExcelWords();
         selections = GetComponentsInChildren<SelectionButton>();
+        formalWord = read.wordList[0];
     }
 
     //更新单词
-    [System.Obsolete]
     public void UpdateWords()
     {
         //改变WordButton的图片、包含的数据
         bool correctness = true;
-        int m = Random.Range(0,3);
+        Debug.Log(formalWord.fullWord);
+        remainText.text = formalWord.remained;
+
+        int m = 2;
         for(int i = 0;i < 3;i++)
         {
             selections[m].selection.content = formalWord.lackletter[i];
@@ -36,5 +45,15 @@ public class RetellWords : MonoBehaviour
 
     }
 
+    public void SuccessRetell()
+    {
+        remainText.text = formalWord.fullWord;
+        Wait();
+    }
+
+    IEnumerable Wait()
+    {
+        yield return new WaitForSeconds(1f);
+    }
     
 }

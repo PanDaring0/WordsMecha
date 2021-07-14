@@ -125,4 +125,11 @@ public class Character : MonoBehaviour
 
         return true;
     }
+
+    public void Dead()
+    {
+        mapScript.gameObjectGroup[position.x,position.y] = null;
+        mapScript.gameObjectList.Remove(gameObject);
+        Destroy(gameObject);
+    }
 }

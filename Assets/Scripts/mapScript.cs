@@ -83,7 +83,7 @@ public class MapScript : MonoBehaviour
         list.Clear();
         if(F[T.x,T.y] == 0)
         {
-            return null;
+            return pathList;
         }
         for(Vector3Int v = T;v!= Vector3Int.zero;v = fromPosition[v.x, v.y])
         {

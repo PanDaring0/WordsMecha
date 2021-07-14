@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkillRelease : MonoBehaviour
 {
     public Character user;
     public MapScript map;
+    public GameObject win;
     public Animator animator;//动画状态机
+    public static int level = 1;
     public static float damageAffect;//背单词的效果
 
     public void ReleaseStart()
@@ -24,7 +27,12 @@ public class SkillRelease : MonoBehaviour
         List<GameObject> enemys = new List<GameObject>();
         //位移
         SkillMove(user.position,target);
+        foreach (Vector3Int dr in damageRange)
+        {
+            Debug.Log(dr);
+        }
         enemys = map.getGameObjectList(damageRange);
+        
         if (string.Equals(user.tag, "Hero"))
         {
             user.GetComponent<Animator>().Play("Hero_ATK");
@@ -43,13 +51,32 @@ public class SkillRelease : MonoBehaviour
                 {
                     enemy.GetComponent<Animator>().Play("Hero_Dmged");
                 }
+
+                if(enemy.GetComponent<Character>().health <= 0)
+                    enemy.GetComponent<Character>().Dead();
             }
         }
 
         Buff(skill,user);
         user.isSkillReleasing = false;
+
+        if(map.gameObjectList.Count ==1)
+        {
+            win.SetActive(true);
+            Wait();
+            level++;
+            SceneManager.LoadScene("FightScene"+level.ToString());
+        }
+
     }
     
+    IEnumerable Wait()
+    {
+        if(Input.GetMouseButtonUp(0))
+            yield break;
+        yield return new WaitForSeconds(6f);
+    }
+
     //施放技能的最大范围
     public List<Vector3Int> ReleaseRange(Skill skill)
     {
@@ -82,7 +109,7 @@ public class SkillRelease : MonoBehaviour
             for(int j = -distance;j<=distance;j++)
             {
                 target.y = j;
-                if(MapScript.disBetweenPosition(target,new Vector3Int(0,0,0))<=distance)
+                if(MapScript.disBetweenPosition(target,new Vector3Int(0,0,0))<distance)
                     damageList.Add(target+centerpoint);
             }
         }
@@ -121,7 +148,10 @@ public class SkillRelease : MonoBehaviour
         if(atk<=def)
             return damage*atk/(atk+def);
         else
-            return damage*(atk/def+1);        
+            if(def <= 0)
+                return damage*atk;
+            else
+                return damage*atk/(def+1);     
     }
 
     //debuff效果
