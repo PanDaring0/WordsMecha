@@ -25,14 +25,24 @@ public class SkillRelease : MonoBehaviour
         //位移
         SkillMove(user.position,target);
         enemys = map.getGameObjectList(damageRange);
+        if (string.Equals(user.tag, "Hero"))
+        {
+            user.GetComponent<Animator>().Play("Hero_ATK");
+        }
         foreach (GameObject enemy in enemys)
         {
-            int damage = Damage(skill,user.atk,enemy.GetComponent<Character>().def);
-            DamageEnemy(enemy,damage);
-
-            if(skill.skillBuffType>=3)//有debuff效果
+            if (enemy != null)
             {
-                DeBuff(skill,enemy);
+                int damage = Damage(skill, user.atk, enemy.GetComponent<Character>().def);
+                DamageEnemy(enemy, damage);
+                if (skill.skillBuffType >= 3)//有debuff效果
+                {
+                    DeBuff(skill, enemy);
+                }
+                if(string.Equals(enemy.tag, "Hero"))
+                {
+                    enemy.GetComponent<Animator>().Play("Hero_Dmged");
+                }
             }
         }
 
@@ -101,7 +111,6 @@ public class SkillRelease : MonoBehaviour
     public void DamageEnemy(GameObject enemy,int damage)
     {
         enemy.GetComponent<Character>().health -= damage;
-        Debug.Log(enemy.GetComponent<Character>().health);
 
     }
 
@@ -109,7 +118,6 @@ public class SkillRelease : MonoBehaviour
     public int Damage(Skill skill,int atk,int def)
     {
         int damage = skill.skillDamage;
-        Debug.Log(damage);
         if(atk<=def)
             return damage*atk/(atk+def);
         else

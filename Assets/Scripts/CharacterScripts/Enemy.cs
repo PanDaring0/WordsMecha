@@ -12,7 +12,6 @@ public class Enemy : Character
     public void TakeActions()
     {
         Escape();
-        movable = false;
     }
 
     public void Escape()
@@ -36,12 +35,20 @@ public class Enemy : Character
                     }
                 }
             }
+            if (posiblePositionList.Count != 0)
+            {
+                Move((Vector3Int)posiblePositionList.GetByIndex(0));
+            }
+            else
+            {
+                movable = false;
+            }
         }
-        if (posiblePositionList.Count != 0)
+        else
         {
-            Move((Vector3Int)posiblePositionList.GetByIndex(0));
+            skillRelease.SkillHandle(skillSet.skills[2], heroPoint);
+            movable = false;
         }
-        skillRelease.SkillHandle(skillSet.skills[2], heroPoint);
     }
 
 

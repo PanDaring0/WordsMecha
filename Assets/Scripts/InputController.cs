@@ -137,8 +137,6 @@ public class InputController : MonoBehaviour
             {
                 if(GridConfirm())
                 {
-                    actions.Add(newAction);
-
                     if(newAction.actionType == 1)//如果是技能
                     {
                         //位移技能使下一个初始点移动
@@ -149,6 +147,9 @@ public class InputController : MonoBehaviour
                         energyRemained -= set.skills[newAction.skillNum].skillCost;
                         set.skills[newAction.skillNum].skillRemained--;
                         background.ShowAction(newAction,set);
+                        actions.Add(newAction);
+                        newAction = new Action();
+                        Debug.Log(energyRemained);
                     }
                     else if(newAction.actionType == 0)//如果是移动
                     {
@@ -157,6 +158,8 @@ public class InputController : MonoBehaviour
                         //player.transform.position = newAction.target;
                         energyRemained -= MapScript.disBetweenPosition(newAction.pos,newAction.target)*moveCost;
                         background.ShowAction(newAction,set);
+                        actions.Add(newAction);
+                        newAction = new Action();
                         Debug.Log(energyRemained);
                     }
                     else//结束回合
@@ -297,7 +300,10 @@ public class InputController : MonoBehaviour
         else    //可以移动
         {
             if(formalAction > 0)
+            {    
                 background.FinishAction();
+                background.actionNum = 0;
+            }
 
             if(actions.Count <= formalAction)
             {
