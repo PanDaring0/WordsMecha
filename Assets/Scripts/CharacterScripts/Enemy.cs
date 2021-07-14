@@ -41,7 +41,7 @@ public class Enemy : Character
         {
             Move((Vector3Int)posiblePositionList.GetByIndex(0));
         }
-        skillRelease.SkillHandle(skillSet.skills[3], heroPoint);
+        skillRelease.SkillHandle(skillSet.skills[2], heroPoint);
     }
 
 

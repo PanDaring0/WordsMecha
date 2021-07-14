@@ -27,7 +27,7 @@ public class SkillRelease : MonoBehaviour
         enemys = map.getGameObjectList(damageRange);
         foreach (GameObject enemy in enemys)
         {
-            int damage = Damage(skill,user.atk,enemy.GetComponent<Enemy>().def);
+            int damage = Damage(skill,user.atk,enemy.GetComponent<Character>().def);
             DamageEnemy(enemy,damage);
 
             if(skill.skillBuffType>=3)//有debuff效果

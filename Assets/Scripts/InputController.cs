@@ -290,7 +290,7 @@ public class InputController : MonoBehaviour
     //读取列表，施放技能
     public void UpdateActionRelease()
     {
-        if(player.isMoveReleasing)//如果正在移动、攻击状态
+        if(player.isMoveReleasing||player.isSkillReleasing)//如果正在移动、攻击状态
         {
             return;
         }
