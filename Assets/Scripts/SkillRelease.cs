@@ -25,6 +25,10 @@ public class SkillRelease : MonoBehaviour
         //位移
         SkillMove(user.position,target);
         enemys = map.getGameObjectList(damageRange);
+        if (string.Equals(user.tag, "Hero"))
+        {
+            user.GetComponent<Animator>().Play("Hero_ATK");
+        }
         foreach (GameObject enemy in enemys)
         {
             if (enemy != null)
@@ -34,6 +38,10 @@ public class SkillRelease : MonoBehaviour
                 if (skill.skillBuffType >= 3)//有debuff效果
                 {
                     DeBuff(skill, enemy);
+                }
+                if(string.Equals(enemy.tag, "Hero"))
+                {
+                    enemy.GetComponent<Animator>().Play("Hero_Dmged");
                 }
             }
         }
